@@ -34,7 +34,7 @@ public class JwtRequestFilter extends OncePerRequestFilter implements Constants 
 		final String authHeadder = request.getHeader(AUTHORIZATION);
 		String username = null;
 		String jwt = null;
-
+	
 		if (Objects.nonNull(authHeadder) && authHeadder.startsWith(BEARER)) {
 			jwt = authHeadder.substring(7);
 			username = jwtUtil.extractUsername(jwt);
@@ -43,9 +43,7 @@ public class JwtRequestFilter extends OncePerRequestFilter implements Constants 
 		if (Objects.nonNull(username) && Objects.isNull(SecurityContextHolder.getContext().getAuthentication())) {
 
 			UserDetails userDetails = this.hospitalUserServiceImpl.loadUserByUsername(username);
-
 			if (jwtUtil.validateToken(jwt, userDetails)) {
-
 				UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
 						userDetails, null, userDetails.getAuthorities());
 				usernamePasswordAuthenticationToken
@@ -54,5 +52,6 @@ public class JwtRequestFilter extends OncePerRequestFilter implements Constants 
 			}
 		}
 		filterChain.doFilter(request, response);
-	}
+		}
+	
 }

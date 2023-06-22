@@ -1,0 +1,154 @@
+{
+	"version": 1,
+	"collections": [
+		{
+			"id": "e46d12d3-6b6a-4e6c-81a6-57ffc1ed40b5",
+			"uid": "0-e46d12d3-6b6a-4e6c-81a6-57ffc1ed40b5",
+			"name": "Security",
+			"description": null,
+			"auth": null,
+			"events": null,
+			"variables": [],
+			"order": [
+				"f2d21c48-8fed-4812-b47d-fa63271bca58",
+				"ca0750d2-53e5-40f4-9114-c15ab1a39db4",
+				"1bbc7afb-c841-4825-8fb7-203f6c4799d1"
+			],
+			"folders_order": [],
+			"protocolProfileBehavior": {},
+			"createdAt": "2021-09-07T06:53:50.749Z",
+			"folders": [],
+			"requests": [
+				{
+					"id": "1bbc7afb-c841-4825-8fb7-203f6c4799d1",
+					"uid": "0-1bbc7afb-c841-4825-8fb7-203f6c4799d1",
+					"name": "Validate the token",
+					"url": "{{SECURITY_API_ROOT}}/authapp/validate",
+					"description": null,
+					"data": null,
+					"dataOptions": null,
+					"dataMode": null,
+					"headerData": [
+						{
+							"key": "Authorization",
+							"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJOaWtoaWwiLCJpc1VzZXIiOnRydWUsImV4cCI6MTY4NzQ2MjYyOSwiaWF0IjoxNjg3NDYwODI5fQ.d26J2GFQrvq_btl2381xYdTTPt9XM3t9hzUMbxw9CcI",
+							"description": "",
+							"type": "default",
+							"enabled": true
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"description": "",
+							"type": "default",
+							"enabled": true
+						}
+					],
+					"method": "GET",
+					"pathVariableData": [],
+					"queryParams": [
+						{
+							"key": "Authorization",
+							"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJOaWtoaWwiLCJpc0FkbWluIjp0cnVlLCJleHAiOjE2ODczNzUyNjQsImlhdCI6MTY4NzM3MzQ2NH0.VPzwArk8oRAjQ2F1QKWTnplV7XxdB2OVcCgy6YrhTc8",
+							"equals": true,
+							"description": null,
+							"enabled": false
+						}
+					],
+					"auth": {
+						"type": "noauth",
+						"noauth": []
+					},
+					"events": null,
+					"folder": null,
+					"responses_order": [],
+					"currentHelper": null,
+					"helperAttributes": null,
+					"collectionId": "e46d12d3-6b6a-4e6c-81a6-57ffc1ed40b5",
+					"headers": "Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJOaWtoaWwiLCJpc1VzZXIiOnRydWUsImV4cCI6MTY4NzQ2MjYyOSwiaWF0IjoxNjg3NDYwODI5fQ.d26J2GFQrvq_btl2381xYdTTPt9XM3t9hzUMbxw9CcI\nContent-Type: application/json\n",
+					"pathVariables": {}
+				},
+				{
+					"id": "ca0750d2-53e5-40f4-9114-c15ab1a39db4",
+					"uid": "0-ca0750d2-53e5-40f4-9114-c15ab1a39db4",
+					"name": "Get Token For the User",
+					"url": "{{SECURITY_API_ROOT}}/authapp/login",
+					"description": null,
+					"data": [],
+					"dataOptions": {
+						"raw": {
+							"language": "json"
+						}
+					},
+					"dataMode": "raw",
+					"headerData": null,
+					"method": "POST",
+					"pathVariableData": [],
+					"queryParams": [],
+					"auth": null,
+					"events": null,
+					"folder": null,
+					"responses_order": [],
+					"currentHelper": null,
+					"helperAttributes": null,
+					"collectionId": "e46d12d3-6b6a-4e6c-81a6-57ffc1ed40b5",
+					"rawModeData": "{\r\n    \"username\" : \"Nikhil\",\r\n    \"password\" : \"Nikhil@123\"\r\n}",
+					"pathVariables": {}
+				},
+				{
+					"id": "f2d21c48-8fed-4812-b47d-fa63271bca58",
+					"uid": "0-f2d21c48-8fed-4812-b47d-fa63271bca58",
+					"name": "Save User to the Database",
+					"url": "{{SECURITY_API_ROOT}}/authapp/saveuser",
+					"description": null,
+					"data": [],
+					"dataOptions": {
+						"raw": {
+							"language": "json"
+						}
+					},
+					"dataMode": "raw",
+					"headerData": null,
+					"method": "POST",
+					"pathVariableData": [],
+					"queryParams": [],
+					"auth": null,
+					"events": null,
+					"folder": null,
+					"responses_order": [],
+					"currentHelper": null,
+					"helperAttributes": null,
+					"collectionId": "e46d12d3-6b6a-4e6c-81a6-57ffc1ed40b5",
+					"rawModeData": "{\r\n    \"username\" : \"Nikhil\",\r\n    \"password\" : \"Nikhil@123\",\r\n    \"role\" : \"ROLE_USER\"\r\n}",
+					"pathVariables": {}
+				}
+			]
+		}
+	],
+	"environments": [
+		{
+			"id": "52c40b7e-3901-4b1a-bbf4-acf427981896",
+			"name": "LOCAL",
+			"values": [
+				{
+					"key": "SECURITY_API_ROOT",
+					"value": "http://localhost:9090",
+					"type": "default",
+					"enabled": true
+				}
+			]
+		},
+		{
+			"id": "86bd7ada-ac37-4d38-8701-3b4e2165e1ba",
+			"name": "My Workspace - globals",
+			"values": []
+		},
+		{
+			"id": "ee3c9ec6-f33e-482a-bc42-38406f7af6cb",
+			"name": "My Workspace - globals",
+			"values": []
+		}
+	],
+	"headerPresets": [],
+	"globals": []
+}

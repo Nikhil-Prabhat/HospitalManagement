@@ -31,10 +31,11 @@ public class SecurityConfig implements Constants {
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		return http.csrf().disable().authorizeHttpRequests().requestMatchers(SAVE_USER_URL, LOGIN_URL).permitAll()
-				.anyRequest().authenticated().and().sessionManagement()
+				.anyRequest().authenticated().and().exceptionHandling().and().sessionManagement()
 				.sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
 				.authenticationProvider(authenticationProvider())
-				.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class).build();
+				.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class)
+				.build();
 	}
 
 	@Bean
