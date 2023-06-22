@@ -13,9 +13,6 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import com.securityservice.exception.UserNotFoundException;
 import com.securityservice.util.Constants;
 
-import io.jsonwebtoken.ExpiredJwtException;
-import io.jsonwebtoken.SignatureException;
-
 @RestControllerAdvice
 public class SecurityServiceExceptionAdvice implements Constants {
 
