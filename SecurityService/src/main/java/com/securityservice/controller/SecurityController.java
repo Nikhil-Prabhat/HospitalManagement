@@ -23,6 +23,8 @@ import com.securityservice.service.HospitalUserServiceImpl;
 import com.securityservice.util.Constants;
 import com.securityservice.util.JwtUtil;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping(Constants.AUTHAPP)
 public class SecurityController implements Constants {
@@ -34,13 +36,13 @@ public class SecurityController implements Constants {
 	private HospitalUserServiceImpl hospitalUserServiceImpl;
 
 	@PostMapping(SAVE_USER)
-	public ResponseEntity<?> saveUser(@RequestBody HospitalUserDTO hospitalUserDTO) {
+	public ResponseEntity<?> saveUser(@RequestBody @Valid HospitalUserDTO hospitalUserDTO) {
 		hospitalUserServiceImpl.saveUser(hospitalUserDTO);
 		return new ResponseEntity<>(USER_SAVED_SUCCESSFULLY, HttpStatus.CREATED);
 	}
 
 	@PostMapping(LOGIN)
-	public ResponseEntity<?> login(@RequestBody AuthRequest authRequest) throws UserNotFoundException {
+	public ResponseEntity<?> loginAndCreateToken(@RequestBody AuthRequest authRequest) throws UserNotFoundException {
 		UserDetails hospitalUser = hospitalUserServiceImpl.loadUserByUsername(authRequest.getUsername());
 		if (hospitalUser.getPassword().equals(authRequest.getPassword()))
 			return new ResponseEntity<>(new UserToken(authRequest.getUsername(), jwtUtil.generateToken(hospitalUser)),
