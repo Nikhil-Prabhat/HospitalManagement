@@ -43,9 +43,7 @@ public class JwtRequestFilter extends OncePerRequestFilter implements Constants 
 		if (Objects.nonNull(username) && Objects.isNull(SecurityContextHolder.getContext().getAuthentication())) {
 
 			UserDetails userDetails = this.hospitalUserServiceImpl.loadUserByUsername(username);
-
 			if (jwtUtil.validateToken(jwt, userDetails)) {
-
 				UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
 						userDetails, null, userDetails.getAuthorities());
 				usernamePasswordAuthenticationToken
