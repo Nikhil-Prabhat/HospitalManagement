@@ -10,12 +10,10 @@ spring:
   hibernate:
    ddl-auto: update
   show-sql: true
-      
-  
+        
 server:
   port: 9090
-  error:
-    include-message: always
-  
+    
 jwt:
- secret: sampletest  
+ secret: sampletest 
+ 
