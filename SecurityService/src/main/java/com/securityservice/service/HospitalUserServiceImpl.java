@@ -38,8 +38,15 @@ public class HospitalUserServiceImpl implements HospitalUserService, Constants, 
 	@Override
 	public void saveUser(HospitalUserDTO hospitalUserDTO) {
 		HospitalUser hospitalUser = new HospitalUser();
-		Roles roleOfUser = hospitalUserDTO.getRole().equals(Roles.ROLE_ADMIN.getUserRole()) ? Roles.ROLE_ADMIN
-				: Roles.ROLE_USER;
+		Roles roleOfUser = null;
+
+		if (hospitalUserDTO.getRole().equals(Roles.ROLE_ADMIN.getUserRole()))
+			roleOfUser = Roles.ROLE_ADMIN;
+		else if (hospitalUserDTO.getRole().equals(Roles.ROLE_DOCTOR.getUserRole()))
+			roleOfUser = Roles.ROLE_DOCTOR;
+		else
+			roleOfUser = Roles.ROLE_USER;
+
 		hospitalUser.setUsername(hospitalUserDTO.getUsername());
 		hospitalUser.setPassword(hospitalUserDTO.getPassword());
 		hospitalUser.setRole(roleOfUser);

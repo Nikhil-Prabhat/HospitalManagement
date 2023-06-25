@@ -56,6 +56,9 @@ public class JwtUtil implements Constants {
 		if (roles.contains(new SimpleGrantedAuthority(ROLE_ADMIN))) {
 			claims.put(IS_ADMIN, Boolean.TRUE);
 		}
+		if (roles.contains(new SimpleGrantedAuthority(ROLE_DOCTOR))) {
+			claims.put(IS_DOCTOR, Boolean.TRUE);
+		}
 		if (roles.contains(new SimpleGrantedAuthority(ROLE_USER))) {
 			claims.put(IS_USER, Boolean.TRUE);
 		}
@@ -87,12 +90,16 @@ public class JwtUtil implements Constants {
 
 		Boolean isAdmin = claims.get(IS_ADMIN, Boolean.class);
 		Boolean isUser = claims.get(IS_USER, Boolean.class);
+		Boolean isDoctor = claims.get(IS_DOCTOR, Boolean.class);
 
 		if (Objects.nonNull(isAdmin) && isAdmin)
 			roles = Arrays.asList(new SimpleGrantedAuthority(ROLE_ADMIN));
 
 		if (Objects.nonNull(isUser) && isUser)
 			roles = Arrays.asList(new SimpleGrantedAuthority(ROLE_USER));
+
+		if (Objects.nonNull(isDoctor) && isDoctor)
+			roles = Arrays.asList(new SimpleGrantedAuthority(ROLE_DOCTOR));
 
 		return roles;
 
