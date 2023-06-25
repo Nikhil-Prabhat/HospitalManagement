@@ -202,7 +202,7 @@
             "type": "string"
           },
           "role": {
-            "pattern": "ROLE_ADMIN|ROLE_USER",
+            "pattern": "ROLE_ADMIN|ROLE_USER|ROLE_DOCTOR",
             "type": "string"
           }
         }

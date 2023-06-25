@@ -3,6 +3,7 @@ package com.securityservice.entity;
 public enum Roles {
 	
 	ROLE_ADMIN("ROLE_ADMIN"),
+	ROLE_DOCTOR("ROLE_DOCTOR"),
 	ROLE_USER("ROLE_USER");
 	
 	private String userRole;
