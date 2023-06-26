@@ -10,6 +10,9 @@ spring:
   hibernate:
    ddl-auto: update
   show-sql: true
+  
+ application:
+  name: authapp
         
 server:
   port: 9090
