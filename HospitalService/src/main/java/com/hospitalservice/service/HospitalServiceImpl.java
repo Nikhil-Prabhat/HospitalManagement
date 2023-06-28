@@ -7,10 +7,13 @@ import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.hospitalservice.dto.AppointmentDTO;
 import com.hospitalservice.dto.DoctorDTO;
 import com.hospitalservice.dto.PatientDTO;
+import com.hospitalservice.entity.Appointment;
 import com.hospitalservice.entity.Doctor;
 import com.hospitalservice.entity.Patient;
+import com.hospitalservice.repository.AppointmentRepository;
 import com.hospitalservice.repository.DoctorRepository;
 import com.hospitalservice.repository.PatientRepository;
 
@@ -22,6 +25,9 @@ public class HospitalServiceImpl implements HospitalService {
 
 	@Autowired
 	private DoctorRepository doctorRepository;
+
+	@Autowired
+	private AppointmentRepository appointmentRepository;
 
 	@Override
 	public void saveDoctor(DoctorDTO doctorDTO) {
@@ -107,6 +113,41 @@ public class HospitalServiceImpl implements HospitalService {
 	@Override
 	public void deletePatient(UUID idOfPatient) {
 		patientRepository.deleteById(idOfPatient);
+
+	}
+
+	@Override
+	public void saveAppointment(AppointmentDTO appointmentDTO) {
+		Appointment appointment = new Appointment();
+		appointment.setPatientName(appointmentDTO.getPatientName());
+		appointment.setPatientMobileNo(appointmentDTO.getPatientMobileNo());
+		appointment.setDoctorAssigned(appointmentDTO.getDoctorAssigned());
+		appointment.setAppointmentDate(appointmentDTO.getAppointmentDate());
+		appointment.setAppointmentStatus(appointmentDTO.getAppointmentStatus());
+
+		appointmentRepository.save(appointment);
+
+	}
+
+	@Override
+	public Appointment getAppointmentById(UUID idOfAppointment) {
+		return appointmentRepository.findById(idOfAppointment).orElse(null);
+	}
+
+	@Override
+	public void updateAppointmentWithStatus(UUID idOfAppointment, String status) {
+		Appointment appointmentById = getAppointmentById(idOfAppointment);
+
+		if (Objects.nonNull(appointmentById)) {
+			appointmentById.setAppointmentStatus(status);
+			appointmentRepository.save(appointmentById);
+		}
+
+	}
+
+	@Override
+	public void deleteAppointment(UUID idOfAppointment) {
+		appointmentRepository.deleteById(idOfAppointment);
 
 	}
 
