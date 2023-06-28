@@ -14,8 +14,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.hospitalservice.dto.AppointmentDTO;
 import com.hospitalservice.dto.DoctorDTO;
 import com.hospitalservice.dto.PatientDTO;
+import com.hospitalservice.entity.Appointment;
 import com.hospitalservice.entity.Doctor;
 import com.hospitalservice.entity.Patient;
 import com.hospitalservice.service.HospitalService;
@@ -28,6 +30,8 @@ public class HospitalController implements Constants {
 	@Autowired
 	private HospitalService hospitalServiceImpl;
 
+	/* CRUD Endpoints Pertaining to Doctor */
+	
 	@PostMapping(SAVE_DOCTOR)
 	public ResponseEntity<?> saveDoctors(@RequestBody DoctorDTO doctorDTO) {
 		hospitalServiceImpl.saveDoctor(doctorDTO);
@@ -52,6 +56,8 @@ public class HospitalController implements Constants {
 		return new ResponseEntity<>(DOCTOR_DELETED_SUCCESSFULLY, HttpStatus.ACCEPTED);
 	}
 
+	/* CRUD Endpoints Pertaining to Patients */
+	
 	@PostMapping(SAVE_PATIENT)
 	public ResponseEntity<?> savePatients(@RequestBody PatientDTO patientDTO) {
 		hospitalServiceImpl.savePatient(patientDTO);
@@ -76,11 +82,41 @@ public class HospitalController implements Constants {
 		return new ResponseEntity<>(PATIENT_DELETED_SUCCESFULLY, HttpStatus.ACCEPTED);
 	}
 
+	
+	/* Endpoint to assign patient to a doctor */
+	
 	@PutMapping(ASSIGN_PATIENT_TO_DOCTOR)
 	public ResponseEntity<?> assignPatientToDoctor(@PathVariable(name = DOCTOR_ID) UUID idOfDoctor,
 			@PathVariable(name = PATIENT_ID) UUID idOfPatient) {
 		hospitalServiceImpl.assignPatientToDoctor(idOfDoctor, idOfPatient);
 		return new ResponseEntity<>(ASSIGN_PATIENT_TO_DOCTOR_SUCCESSFULLY, HttpStatus.ACCEPTED);
+	}
+
+	/* CRUD Endpoints related to appointment*/
+	
+	@PostMapping(SAVE_APPOINTMENT)
+	public ResponseEntity<?> saveAppointment(@RequestBody AppointmentDTO appointmentDTO) {
+		hospitalServiceImpl.saveAppointment(appointmentDTO);
+		return new ResponseEntity<>(APPOINTMENT_SAVED_SUCCESSFULLY, HttpStatus.CREATED);
+	}
+
+	@GetMapping(GET_APPOINTMENT_BY_ID)
+	public ResponseEntity<?> getAppointmentById(@PathVariable(name = ID) UUID idOfAppointment) {
+		Appointment appointmentById = hospitalServiceImpl.getAppointmentById(idOfAppointment);
+		return new ResponseEntity<>(appointmentById, HttpStatus.OK);
+	}
+
+	@PutMapping(UPDATE_APPOINTMENT_STATUS)
+	public ResponseEntity<?> updateAppointmentWithStatus(@PathVariable(name = ID) UUID idOfAppointment,
+			@PathVariable(name = STATUS) String status) {
+		hospitalServiceImpl.updateAppointmentWithStatus(idOfAppointment, status);
+		return new ResponseEntity<>(APPOINTMENT_UPDATED_SUCCESSFULLY, HttpStatus.ACCEPTED);
+	}
+
+	@DeleteMapping(DELETE_APPOINTMENT)
+	public ResponseEntity<?> deleteAppointment(@PathVariable(name = ID) UUID idOfAppointment) {
+		hospitalServiceImpl.deleteAppointment(idOfAppointment);
+		return new ResponseEntity<>(APPOINTMENT_DELETED_SUCCESSFULLY, HttpStatus.ACCEPTED);
 	}
 
 }
