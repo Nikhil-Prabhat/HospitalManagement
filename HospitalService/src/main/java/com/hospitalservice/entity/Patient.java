@@ -4,6 +4,8 @@ import java.util.Set;
 import java.util.UUID;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -28,6 +30,9 @@ public class Patient {
 	private String mobileNo;
 	private String address;
 	private String briefProblemDescription;
+
+	@Enumerated(EnumType.STRING)
+	private TreatmentStatus treatmentStatus;
 
 	@ManyToMany(mappedBy = "patients", fetch = FetchType.LAZY)
 	private Set<Doctor> doctors;
