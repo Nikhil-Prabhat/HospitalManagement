@@ -54,6 +54,24 @@ public class HospitalController implements Constants {
 		Doctor doctorById = hospitalServiceImpl.getDoctorById(idOfDoctor);
 		return new ResponseEntity<>(doctorById, HttpStatus.OK);
 	}
+	
+	@GetMapping(GET_ALL_PATIENTS_FOR_A_DOCTOR)
+	public ResponseEntity<?> getAllPatientsForADoctor(@PathVariable(name = ID) UUID idOfDoctor) {
+		List<Patient> allPatientsForADoctor = hospitalServiceImpl.getAllPatientsForADoctor(idOfDoctor);
+		return new ResponseEntity<>(allPatientsForADoctor, HttpStatus.OK);
+	}
+	
+	@GetMapping(GET_ALL_TREATMENT_HISTORY_FOR_A_DOCTOR)
+	public ResponseEntity<?> getAllTreatmentHistoriesForADoctor(@PathVariable(name = ID) UUID idOfDoctor) {
+		List<TreatmentHistory> allTreatmentHistoryForADoctor = hospitalServiceImpl.getAllTreatmentHistoryForADoctor(idOfDoctor);
+		return new ResponseEntity<>(allTreatmentHistoryForADoctor, HttpStatus.OK);
+	}
+	
+	@GetMapping(GET_ALL_APPOINTMENTS_FOR_A_DOCTOR)
+	public ResponseEntity<?> getAllAppointmentsByDoctorAssignedName(@PathVariable(name = DOCTOR_ASSIGNED_NAME) String doctorAssignedName) {
+		List<Appointment> allAppointmentsForADoctor = hospitalServiceImpl.getAllAppointmentsForADoctor(doctorAssignedName);
+		return new ResponseEntity<>(allAppointmentsForADoctor, HttpStatus.OK);
+	}
 
 	@PutMapping(UPDATE_DOCTOR)
 	public ResponseEntity<?> updateDoctor(@PathVariable(name = ID) UUID idOfDoctor, @RequestBody DoctorDTO doctorDTO) {

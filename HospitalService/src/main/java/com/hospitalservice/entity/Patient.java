@@ -3,6 +3,8 @@ package com.hospitalservice.entity;
 import java.util.Set;
 import java.util.UUID;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -13,12 +15,16 @@ import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
+@Getter
+@Setter
+@ToString
 @Entity
 @Table(name = "PATIENT_TABLE", schema = "HOSPITAL")
 public class Patient {
@@ -35,5 +41,6 @@ public class Patient {
 	private TreatmentStatus treatmentStatus;
 
 	@ManyToMany(mappedBy = "patients", fetch = FetchType.LAZY)
+	@JsonBackReference
 	private Set<Doctor> doctors;
 }
