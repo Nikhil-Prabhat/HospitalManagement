@@ -8,6 +8,7 @@ public interface Constants {
 	String DOCTOR_ID = "doctorId";
 	String PATIENT_ID = "patientId";
 	String STATUS = "status";
+	String DOCTOR_ASSIGNED_NAME = "doctorAssignedName";
 	String TREATMENT = "treatment";
 	String HOSPITAL_APP = "/hospitalapp";
 	String SAVE_DOCTOR = "/savedoctors";
@@ -36,6 +37,9 @@ public interface Constants {
 	String GET_BILL_BY_ID = "/getbillbyid/{" + ID + "}";
 	String UPDATE_BILL = "/updatebill/{" + ID + "}";
 	String DELETE_BILL = "/deltebill/{" + ID + "}";
+	String GET_ALL_PATIENTS_FOR_A_DOCTOR = "/getallpatientsforadoctor/{" + ID + "}";
+	String GET_ALL_TREATMENT_HISTORY_FOR_A_DOCTOR = "/getalltreatmenthistoryforadoctor/{" + ID + "}";
+	String GET_ALL_APPOINTMENTS_FOR_A_DOCTOR = "/getallappointmentsforadoctor/{" + ID + "}";
 	String GET_TOTAL_BILL_OF_HOSPITAL = "/gettotalbillofhospital";
 	String PATIENT_SAVED_SUCCESSFULLY = "Patient Saved Successfully";
 	String DOCTOR_SAVED_SUCCESSFULLY = "Doctor saved successfully";

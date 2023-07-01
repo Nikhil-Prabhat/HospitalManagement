@@ -25,6 +25,12 @@ public interface HospitalService {
 	public void updateDoctor(UUID idOfDoctor, DoctorDTO doctorDTO);
 
 	public void deleteDoctor(UUID idOfDoctor);
+	
+	public List<Patient> getAllPatientsForADoctor(UUID idOfDoctor);
+	
+	public List<TreatmentHistory> getAllTreatmentHistoryForADoctor(UUID idOfDoctor);
+	
+	public List<Appointment> getAllAppointmentsForADoctor(String doctorAssignedName);
 
 	public void savePatient(PatientDTO patientDTO);
 

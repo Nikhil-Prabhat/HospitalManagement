@@ -1,5 +1,6 @@
 package com.hospitalservice.service;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
@@ -14,6 +15,7 @@ import com.hospitalservice.dto.DoctorDTO;
 import com.hospitalservice.dto.PatientDTO;
 import com.hospitalservice.dto.TreatmentHistoryDTO;
 import com.hospitalservice.entity.Appointment;
+import com.hospitalservice.entity.AppointmentStatus;
 import com.hospitalservice.entity.Bill;
 import com.hospitalservice.entity.Doctor;
 import com.hospitalservice.entity.Patient;
@@ -113,6 +115,7 @@ public class HospitalServiceImpl implements HospitalService {
 			patientById.setMobileNo(patientDTO.getMobileNo());
 			patientById.setAddress(patientDTO.getAddress());
 			patientById.setBriefProblemDescription(patientDTO.getBriefProblemDescription());
+			patientById.setTreatmentStatus(patientDTO.getTreatmentStatus());
 			patientRepository.save(patientById);
 		}
 
@@ -135,7 +138,7 @@ public class HospitalServiceImpl implements HospitalService {
 		Appointment appointment = new Appointment();
 		appointment.setPatientName(appointmentDTO.getPatientName());
 		appointment.setPatientMobileNo(appointmentDTO.getPatientMobileNo());
-		appointment.setDoctorAssigned(appointmentDTO.getDoctorAssigned());
+		appointment.setDoctorAssignedName(appointmentDTO.getDoctorAssignedName());
 		appointment.setAppointmentDate(appointmentDTO.getAppointmentDate());
 		appointment.setAppointmentStatus(appointmentDTO.getAppointmentStatus());
 
@@ -153,7 +156,9 @@ public class HospitalServiceImpl implements HospitalService {
 		Appointment appointmentById = getAppointmentById(idOfAppointment);
 
 		if (Objects.nonNull(appointmentById)) {
-			appointmentById.setAppointmentStatus(status);
+			AppointmentStatus appointmentStatus = status.equals(AppointmentStatus.CONFIRMED.getAppointmentStatus()) 
+					? AppointmentStatus.CONFIRMED : AppointmentStatus.NOT_ACCEPTED;
+			appointmentById.setAppointmentStatus(appointmentStatus);
 			appointmentRepository.save(appointmentById);
 		}
 
@@ -273,6 +278,29 @@ public class HospitalServiceImpl implements HospitalService {
 	public List<TreatmentHistory> getAllTreatmentHistories() {
 		return treatmentHistoryRepository.findAll();
 		
+	}
+
+	@Override
+	public List<Patient> getAllPatientsForADoctor(UUID idOfDoctor) {
+		List<Patient> listOfPatients = new ArrayList<>();
+		Doctor doctorById = getDoctorById(idOfDoctor);
+		doctorById.getPatients()
+				.stream()
+				.forEach(patient -> listOfPatients.add(patient));
+		
+		return listOfPatients;
+	}
+
+	@Override
+	public List<TreatmentHistory> getAllTreatmentHistoryForADoctor(UUID idOfDoctor) {
+		List<TreatmentHistory> allTreatmentHistoriesByDoctorId = treatmentHistoryRepository.findAllTreatmentHistoriesByDoctorId(idOfDoctor);
+		return allTreatmentHistoriesByDoctorId;
+	}
+
+	@Override
+	public List<Appointment> getAllAppointmentsForADoctor(String doctorAssignedName) {
+		List<Appointment> allAppointmentsByDoctorAssignedName = appointmentRepository.findByDoctorAssignedName(doctorAssignedName);
+		return allAppointmentsByDoctorAssignedName;
 	}
 
 }

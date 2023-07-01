@@ -4,6 +4,8 @@ import java.util.Date;
 import java.util.UUID;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -24,7 +26,9 @@ public class Appointment {
 	private UUID id;
 	private String patientName;
 	private String patientMobileNo;
-	private String doctorAssigned;
+	private String doctorAssignedName;
 	private Date appointmentDate;
-	private String appointmentStatus;
+	
+	@Enumerated(EnumType.STRING)
+	private AppointmentStatus appointmentStatus;
 }
