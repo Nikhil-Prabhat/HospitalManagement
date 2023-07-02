@@ -303,4 +303,32 @@ public class HospitalServiceImpl implements HospitalService {
 		return allAppointmentsByDoctorAssignedName;
 	}
 
+	@Override
+	public List<TreatmentHistory> getAllTreatmentHistoriesByPatientId(UUID idOfPatient) {
+		List<TreatmentHistory> allTreatmentHistoriesByPatientId = treatmentHistoryRepository.findAllTreatmentHistoriesByPatientId(idOfPatient);
+		return allTreatmentHistoriesByPatientId;
+	}
+
+	@Override
+	public Bill getBillByPatientId(UUID idOfPatient) {
+		Bill billByPatientId = billRepository.getBillByPatientId(idOfPatient);
+		return billByPatientId;
+	}
+
+	@Override
+	public List<Appointment> getAllAppointmentsForAPatient(String patientName) {
+		List<Appointment> appointmentsByPatientName = appointmentRepository.findByPatientName(patientName);
+		return appointmentsByPatientName;
+	}
+
+	@Override
+	public List<Doctor> getAllDoctorsForAPatient(UUID idOfPatient) {
+		List<Doctor> doctorslistForAPatient = new ArrayList<>();
+		Patient patientById = getPatientById(idOfPatient);
+		patientById.getDoctors()
+		 			.stream()
+		 			.forEach(doctor -> doctorslistForAPatient.add(doctor));
+		return doctorslistForAPatient;
+	}
+
 }

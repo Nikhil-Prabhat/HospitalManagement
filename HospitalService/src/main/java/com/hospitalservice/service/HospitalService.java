@@ -37,6 +37,14 @@ public interface HospitalService {
 	public Patient getPatientById(UUID idOfPatient);
 	
 	public List<Patient> getAllPatients();
+	
+	public List<TreatmentHistory> getAllTreatmentHistoriesByPatientId(UUID idOfPatient);
+	
+	public List<Appointment> getAllAppointmentsForAPatient(String patientName);
+	
+	public List<Doctor> getAllDoctorsForAPatient(UUID idOfPatient);
+	
+	public Bill getBillByPatientId(UUID idOfPatient);
 
 	public void updatePatient(UUID idOfPatient, PatientDTO patientDTO);
 
