@@ -19,5 +19,11 @@ public interface TreatmentHistoryRepository extends JpaRepository<TreatmentHisto
 			+ "inner join hospital.doctor_table dt\r\n" + "on tht.doctor_id_fk = dt.id\r\n"
 			+ "where dt.id = :id", nativeQuery = true)
 	public List<TreatmentHistory> findAllTreatmentHistoriesByDoctorId(@PathParam(ID) UUID id);
+	
+	@Query(name = "select tht.* from hospital.treatment_history_table tht\r\n"
+			+ "inner join hospital.patient_table pt\r\n"
+			+ "on tht.patient_id_fk = pt.id\r\n"
+			+ "where pt.id = :id", nativeQuery = true)
+	public List<TreatmentHistory> findAllTreatmentHistoriesByPatientId(@PathParam(ID) UUID id);
 
 }

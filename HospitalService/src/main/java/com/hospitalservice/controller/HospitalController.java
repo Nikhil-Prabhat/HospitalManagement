@@ -54,25 +54,28 @@ public class HospitalController implements Constants {
 		Doctor doctorById = hospitalServiceImpl.getDoctorById(idOfDoctor);
 		return new ResponseEntity<>(doctorById, HttpStatus.OK);
 	}
-	
+
 	@GetMapping(GET_ALL_PATIENTS_FOR_A_DOCTOR)
 	public ResponseEntity<?> getAllPatientsForADoctor(@PathVariable(name = ID) UUID idOfDoctor) {
 		List<Patient> allPatientsForADoctor = hospitalServiceImpl.getAllPatientsForADoctor(idOfDoctor);
 		return new ResponseEntity<>(allPatientsForADoctor, HttpStatus.OK);
 	}
-	
+
 	@GetMapping(GET_ALL_TREATMENT_HISTORY_FOR_A_DOCTOR)
 	public ResponseEntity<?> getAllTreatmentHistoriesForADoctor(@PathVariable(name = ID) UUID idOfDoctor) {
-		List<TreatmentHistory> allTreatmentHistoryForADoctor = hospitalServiceImpl.getAllTreatmentHistoryForADoctor(idOfDoctor);
+		List<TreatmentHistory> allTreatmentHistoryForADoctor = hospitalServiceImpl
+				.getAllTreatmentHistoryForADoctor(idOfDoctor);
 		return new ResponseEntity<>(allTreatmentHistoryForADoctor, HttpStatus.OK);
 	}
-	
+
 	@GetMapping(GET_ALL_APPOINTMENTS_FOR_A_DOCTOR)
-	public ResponseEntity<?> getAllAppointmentsByDoctorAssignedName(@PathVariable(name = DOCTOR_ASSIGNED_NAME) String doctorAssignedName) {
-		List<Appointment> allAppointmentsForADoctor = hospitalServiceImpl.getAllAppointmentsForADoctor(doctorAssignedName);
+	public ResponseEntity<?> getAllAppointmentsByDoctorAssignedName(
+			@PathVariable(name = DOCTOR_ASSIGNED_NAME) String doctorAssignedName) {
+		List<Appointment> allAppointmentsForADoctor = hospitalServiceImpl
+				.getAllAppointmentsForADoctor(doctorAssignedName);
 		return new ResponseEntity<>(allAppointmentsForADoctor, HttpStatus.OK);
 	}
-
+	
 	@PutMapping(UPDATE_DOCTOR)
 	public ResponseEntity<?> updateDoctor(@PathVariable(name = ID) UUID idOfDoctor, @RequestBody DoctorDTO doctorDTO) {
 		hospitalServiceImpl.updateDoctor(idOfDoctor, doctorDTO);
@@ -97,6 +100,31 @@ public class HospitalController implements Constants {
 	public ResponseEntity<?> getAllPatients() {
 		List<Patient> allPatients = hospitalServiceImpl.getAllPatients();
 		return new ResponseEntity<>(allPatients, HttpStatus.OK);
+	}
+
+	@GetMapping(GET_ALL_TREATMENT_HISTORY_FOR_A_PATIENT)
+	public ResponseEntity<?> getAllTreatmentHistoriesForAPatient(@PathVariable(name = ID) UUID idOfPatient) {
+		List<TreatmentHistory> allTreatmentHistoriesByPatientId = hospitalServiceImpl
+				.getAllTreatmentHistoriesByPatientId(idOfPatient);
+		return new ResponseEntity<>(allTreatmentHistoriesByPatientId, HttpStatus.OK);
+	}
+
+	@GetMapping(GET_BILL_BY_PATIENT_ID)
+	public ResponseEntity<?> getBillByPatientId(@PathVariable(name = ID) UUID idOfPatient) {
+		Bill billByPatientId = hospitalServiceImpl.getBillByPatientId(idOfPatient);
+		return new ResponseEntity<>(billByPatientId, HttpStatus.OK);
+	}
+	
+	@GetMapping(GET_ALL_APPOINTMENTS_FOR_A_PATIENT)
+	public ResponseEntity<?> getAllAppointmentsByPatientName(@PathVariable(name = PATIENT_NAME) String patientName) {
+		List<Appointment> allAppointmentsForAPatient = hospitalServiceImpl.getAllAppointmentsForAPatient(patientName);
+		return new ResponseEntity<>(allAppointmentsForAPatient, HttpStatus.OK);
+	}
+	
+	@GetMapping(GET_ALL_DOCTORS_FOR_A_PATIENT)
+	public ResponseEntity<?> getAllDoctorsForAPatient(@PathVariable(name = ID) UUID idOfPatient) {
+		List<Doctor> allDoctorsForAPatient = hospitalServiceImpl.getAllDoctorsForAPatient(idOfPatient);
+		return new ResponseEntity<>(allDoctorsForAPatient, HttpStatus.OK);
 	}
 
 	@GetMapping(GET_PATIENT_BY_ID)

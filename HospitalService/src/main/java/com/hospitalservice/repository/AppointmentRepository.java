@@ -13,5 +13,7 @@ import com.hospitalservice.entity.Appointment;
 public interface AppointmentRepository extends JpaRepository<Appointment, UUID> {
 
 	List<Appointment> findByDoctorAssignedName(String doctorAssignedName);
+	
+	List<Appointment> findByPatientName(String patientName);
 
 }
