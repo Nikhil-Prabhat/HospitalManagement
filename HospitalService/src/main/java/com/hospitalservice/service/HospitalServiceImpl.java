@@ -8,6 +8,7 @@ import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.hospitalservice.dto.AppointmentDTO;
 import com.hospitalservice.dto.BillDTO;
@@ -27,6 +28,7 @@ import com.hospitalservice.repository.PatientRepository;
 import com.hospitalservice.repository.TreatmentHistoryRepository;
 
 @Service
+@Transactional
 public class HospitalServiceImpl implements HospitalService {
 
 	@Autowired
@@ -174,7 +176,7 @@ public class HospitalServiceImpl implements HospitalService {
 	public void saveTreatmentHistory(TreatmentHistoryDTO treatmentHistoryDTO) {
 		TreatmentHistory treatmentHistory = new TreatmentHistory();
 		treatmentHistory.setPatient(treatmentHistoryDTO.getPatient());
-		treatmentHistory.setDoctor(treatmentHistoryDTO.getDoctor());
+		treatmentHistory.setDoctor(treatmentHistoryDTO.getDoctor()); 
 		treatmentHistory.setSymptoms(treatmentHistoryDTO.getSymptoms());
 		treatmentHistory.setBriefDescription(treatmentHistoryDTO.getBriefDescription());
 		treatmentHistory.setTreatment(treatmentHistoryDTO.getTreatment());
@@ -247,7 +249,7 @@ public class HospitalServiceImpl implements HospitalService {
 	public double getTotalBillAmountOfHospital() {
 		List<Bill> listOfBillsOfHospital = billRepository.findAll();
 		Double totalBillOfHospital = listOfBillsOfHospital.stream()
-				.filter(bill -> Objects.nonNull(bill))
+				.filter(bill -> Objects.nonNull(bill) && Objects.nonNull(bill.getTotalAmountOfBill()))
 				.map(Bill::getTotalAmountOfBill)
 				.reduce(0.0, Double::sum);
 		return totalBillOfHospital;

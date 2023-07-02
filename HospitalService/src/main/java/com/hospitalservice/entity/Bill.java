@@ -13,13 +13,14 @@ import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
+@Getter
+@Setter
 @Entity
 @Table(name = "BILL_TABLE", schema = "HOSPITAL")
 public class Bill {
@@ -28,8 +29,8 @@ public class Bill {
 	@GeneratedValue(strategy = GenerationType.UUID)
 	private UUID id;
 
-	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "PATIENT_ID_FK")
+	@OneToOne(cascade = CascadeType.MERGE)
+	@JoinColumn(name = "PATIENT_BILL_FK" ,referencedColumnName = "ID")
 	private Patient patient;
 
 	private Double consultationFee;

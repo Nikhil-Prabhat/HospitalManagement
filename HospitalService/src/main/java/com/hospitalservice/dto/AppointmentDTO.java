@@ -1,7 +1,6 @@
 package com.hospitalservice.dto;
 
 import java.util.Date;
-import java.util.UUID;
 
 import com.hospitalservice.entity.AppointmentStatus;
 

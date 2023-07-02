@@ -134,7 +134,7 @@ public class HospitalController implements Constants {
 	}
 
 	@PutMapping(UPDATE_PATIENT)
-	public ResponseEntity<?> updatePatient(@PathVariable(name = ID) UUID idOfPatient, PatientDTO patientDTO) {
+	public ResponseEntity<?> updatePatient(@PathVariable(name = ID) UUID idOfPatient, @RequestBody PatientDTO patientDTO) {
 		hospitalServiceImpl.updatePatient(idOfPatient, patientDTO);
 		return new ResponseEntity<>(PATIENT_UPDATED_SUCCESSFULLY, HttpStatus.ACCEPTED);
 	}
