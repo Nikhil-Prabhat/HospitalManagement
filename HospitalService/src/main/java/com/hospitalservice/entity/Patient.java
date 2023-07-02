@@ -4,6 +4,7 @@ import java.util.Set;
 import java.util.UUID;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -39,8 +40,9 @@ public class Patient {
 
 	@Enumerated(EnumType.STRING)
 	private TreatmentStatus treatmentStatus;
-
+		
 	@ManyToMany(mappedBy = "patients", fetch = FetchType.LAZY)
 	@JsonBackReference
+	@JsonIgnore
 	private Set<Doctor> doctors;
 }

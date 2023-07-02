@@ -37,7 +37,7 @@ public interface Constants {
 	String GET_ALL_BILLS = "/getallbills";
 	String GET_BILL_BY_ID = "/getbillbyid/{" + ID + "}";
 	String UPDATE_BILL = "/updatebill/{" + ID + "}";
-	String DELETE_BILL = "/deltebill/{" + ID + "}";
+	String DELETE_BILL = "/deletebill/{" + ID + "}";
 	String GET_ALL_PATIENTS_FOR_A_DOCTOR = "/getallpatientsforadoctor/{" + ID + "}";
 	String GET_ALL_TREATMENT_HISTORY_FOR_A_DOCTOR = "/getalltreatmenthistoryforadoctor/{" + ID + "}";
 	String GET_ALL_TREATMENT_HISTORY_FOR_A_PATIENT = "/getalltreatmenthistoryforapatient/{" + ID + "}";

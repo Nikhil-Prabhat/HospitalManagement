@@ -3,6 +3,7 @@ package com.hospitalservice.entity;
 import java.util.Set;
 import java.util.UUID;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.CascadeType;
@@ -37,7 +38,7 @@ public class Doctor {
 	private String specialisation;
 	private String mobileNo;
 	private String address;
-
+	
 	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinTable(name = "DOCTOR_PATIENT_TABLE", schema = "HOSPITAL", 
 	joinColumns = {
@@ -47,6 +48,7 @@ public class Doctor {
 					}
 	)
 	@JsonManagedReference
+	@JsonIgnore
 	private Set<Patient> patients;
 		
 }
