@@ -16,7 +16,7 @@ public interface BillRepository extends JpaRepository<Bill, UUID>, Constants {
 	
 	@Query(name = "select bt.* from hosptial.bill_table bt\r\n"
 			+ "inner join hospital.patient_table pt\r\n"
-			+ "on bt.patient_id_fk = pt.id\r\n"
+			+ "on bt.patient_bill_fk = pt.id\r\n"
 			+ "where pt.id = :id", nativeQuery = true)
 	public Bill getBillByPatientId(@PathParam(ID) UUID id);
 
