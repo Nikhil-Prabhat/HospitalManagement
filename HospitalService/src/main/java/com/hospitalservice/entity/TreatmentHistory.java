@@ -6,6 +6,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -26,9 +27,11 @@ public class TreatmentHistory {
 	private UUID id;
 
 	@ManyToOne
+	@JoinColumn(name = "PATIENT_TH_FK")
 	private Patient patient;
 	
 	@ManyToOne
+	@JoinColumn(name = "DOCTOR_TH_FK")
 	private Doctor doctor;
 	private String briefDescription;
 	private String symptoms;

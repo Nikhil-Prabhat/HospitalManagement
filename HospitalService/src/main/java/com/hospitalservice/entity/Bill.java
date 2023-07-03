@@ -3,7 +3,6 @@ package com.hospitalservice.entity;
 import java.util.UUID;
 
 import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -37,7 +36,6 @@ public class Bill {
 	private Double pharmacyFee;
 	private Double hospitalizationFee;
 
-	@Column(insertable = false, updatable = false)
 	@Setter(value = AccessLevel.NONE)
 	private Double totalAmountOfBill;
 }
