@@ -21,15 +21,17 @@ import com.hospitalservice.entity.Bill;
 import com.hospitalservice.entity.Doctor;
 import com.hospitalservice.entity.Patient;
 import com.hospitalservice.entity.TreatmentHistory;
+import com.hospitalservice.exception.RecordNotFound;
 import com.hospitalservice.repository.AppointmentRepository;
 import com.hospitalservice.repository.BillRepository;
 import com.hospitalservice.repository.DoctorRepository;
 import com.hospitalservice.repository.PatientRepository;
 import com.hospitalservice.repository.TreatmentHistoryRepository;
+import com.hospitalservice.util.Constants;
 
 @Service
 @Transactional
-public class HospitalServiceImpl implements HospitalService {
+public class HospitalServiceImpl implements HospitalService, Constants {
 
 	@Autowired
 	private PatientRepository patientRepository;
@@ -74,7 +76,7 @@ public class HospitalServiceImpl implements HospitalService {
 	}
 
 	@Override
-	public void assignPatientToDoctor(UUID idOfDoctor, UUID idOfPatient) {
+	public void assignPatientToDoctor(UUID idOfDoctor, UUID idOfPatient) throws RecordNotFound {
 		Doctor doctorById = getDoctorById(idOfDoctor);
 		Patient patientById = getPatientById(idOfPatient);
 
@@ -86,19 +88,30 @@ public class HospitalServiceImpl implements HospitalService {
 	}
 
 	@Override
-	public Doctor getDoctorById(UUID idOfDoctor) {
-		return doctorRepository.findById(idOfDoctor).orElse(null);
+	public Doctor getDoctorById(UUID idOfDoctor) throws RecordNotFound {
+		Doctor doctorById = doctorRepository.findById(idOfDoctor).orElse(null);
+		
+		if(Objects.nonNull(doctorById))
+			return doctorById;
+		else 
+			throw new RecordNotFound(DOCTOR_NOT_FOUND_WITH_ID + idOfDoctor);
 	}
 
 	@Override
-	public Patient getPatientById(UUID idOfPatient) {
-		return patientRepository.findById(idOfPatient).orElse(null);
+	public Patient getPatientById(UUID idOfPatient) throws RecordNotFound {
+		Patient patientById = patientRepository.findById(idOfPatient).orElse(null); 
+		
+		 if(Objects.nonNull(patientById))
+			 return patientById;
+		 else
+			 throw new RecordNotFound(PATIENT_NOT_FOUND_WITH_ID + idOfPatient);
+					 
 	}
 
 	@Override
-	public void updateDoctor(UUID idOfDoctor, DoctorDTO doctorDTO) {
+	public void updateDoctor(UUID idOfDoctor, DoctorDTO doctorDTO) throws RecordNotFound {
 		Doctor doctorById = getDoctorById(idOfDoctor);
-
+		
 		if (Objects.nonNull(doctorById)) {
 			doctorById.setName(doctorDTO.getName());
 			doctorById.setMobileNo(doctorDTO.getMobileNo());
@@ -109,9 +122,9 @@ public class HospitalServiceImpl implements HospitalService {
 	}
 
 	@Override
-	public void updatePatient(UUID idOfPatient, PatientDTO patientDTO) {
+	public void updatePatient(UUID idOfPatient, PatientDTO patientDTO) throws RecordNotFound {
 		Patient patientById = getPatientById(idOfPatient);
-
+		
 		if (Objects.nonNull(patientById)) {
 			patientById.setName(patientDTO.getName());
 			patientById.setMobileNo(patientDTO.getMobileNo());
@@ -124,14 +137,20 @@ public class HospitalServiceImpl implements HospitalService {
 	}
 
 	@Override
-	public void deleteDoctor(UUID idOfDoctor) {
-		doctorRepository.deleteById(idOfDoctor);
+	public void deleteDoctor(UUID idOfDoctor) throws RecordNotFound {
+		Doctor doctorById = getDoctorById(idOfDoctor);
+		
+		if(Objects.nonNull(doctorById))
+			doctorRepository.deleteById(idOfDoctor);
 
 	}
 
 	@Override
-	public void deletePatient(UUID idOfPatient) {
-		patientRepository.deleteById(idOfPatient);
+	public void deletePatient(UUID idOfPatient) throws RecordNotFound {
+		Patient patientById = getPatientById(idOfPatient);
+		
+		if(Objects.nonNull(patientById))
+			patientRepository.deleteById(idOfPatient);
 
 	}
 
@@ -149,12 +168,17 @@ public class HospitalServiceImpl implements HospitalService {
 	}
 
 	@Override
-	public Appointment getAppointmentById(UUID idOfAppointment) {
-		return appointmentRepository.findById(idOfAppointment).orElse(null);
+	public Appointment getAppointmentById(UUID idOfAppointment) throws RecordNotFound {
+		 Appointment appointmentById = appointmentRepository.findById(idOfAppointment).orElse(null);
+		 
+		 if(Objects.nonNull(appointmentById))
+			 return appointmentById;
+		 else
+			 throw new RecordNotFound(APPOINTMENT_NOT_FOUND_WITH_ID + idOfAppointment);
 	}
 
 	@Override
-	public void updateAppointmentWithStatus(UUID idOfAppointment, String status) {
+	public void updateAppointmentWithStatus(UUID idOfAppointment, String status) throws RecordNotFound {
 		Appointment appointmentById = getAppointmentById(idOfAppointment);
 
 		if (Objects.nonNull(appointmentById)) {
@@ -167,8 +191,11 @@ public class HospitalServiceImpl implements HospitalService {
 	}
 
 	@Override
-	public void deleteAppointment(UUID idOfAppointment) {
-		appointmentRepository.deleteById(idOfAppointment);
+	public void deleteAppointment(UUID idOfAppointment) throws RecordNotFound {
+		Appointment appointmentById = getAppointmentById(idOfAppointment);
+		
+		if(Objects.nonNull(appointmentById))
+			appointmentRepository.deleteById(idOfAppointment);
 
 	}
 
@@ -186,25 +213,32 @@ public class HospitalServiceImpl implements HospitalService {
 	}
 
 	@Override
-	public TreatmentHistory getTreatmentHistoryById(UUID idOfTreatmentHistory) {
-		return treatmentHistoryRepository.findById(idOfTreatmentHistory).orElse(null);
+	public TreatmentHistory getTreatmentHistoryById(UUID idOfTreatmentHistory) throws RecordNotFound {
+		 TreatmentHistory treatmentHistoryById = treatmentHistoryRepository.findById(idOfTreatmentHistory).orElse(null);
+		 
+		 if(Objects.nonNull(treatmentHistoryById))
+			 return treatmentHistoryById;
+		 else
+			 throw new RecordNotFound(TREATMENT_HISTORY_NOT_FOUND_WITH_ID + idOfTreatmentHistory);
 	}
 
 	@Override
-	public void updateTreatmentInTreatmentHistory(UUID idOfTreatmentHistory, String treatment) {
+	public void updateTreatmentInTreatmentHistory(UUID idOfTreatmentHistory, String treatment) throws RecordNotFound {
 		TreatmentHistory treatmentHistoryById = getTreatmentHistoryById(idOfTreatmentHistory);
 
 		if (Objects.nonNull(treatmentHistoryById)) {
 			treatmentHistoryById.setTreatment(treatment);
-
 			treatmentHistoryRepository.save(treatmentHistoryById);
 		}
 
 	}
 
 	@Override
-	public void deleteTreatment(UUID idOfTreatmentHistory) {
-		treatmentHistoryRepository.deleteById(idOfTreatmentHistory);
+	public void deleteTreatment(UUID idOfTreatmentHistory) throws RecordNotFound {
+		TreatmentHistory treatmentHistoryById = getTreatmentHistoryById(idOfTreatmentHistory);
+		
+		if(Objects.nonNull(treatmentHistoryById))
+			treatmentHistoryRepository.deleteById(idOfTreatmentHistory);
 
 	}
 
@@ -221,12 +255,17 @@ public class HospitalServiceImpl implements HospitalService {
 	}
 
 	@Override
-	public Bill getBillById(UUID idOfBill) {
-		return billRepository.findById(idOfBill).orElse(null);
+	public Bill getBillById(UUID idOfBill) throws RecordNotFound {
+		 Bill billWithId = billRepository.findById(idOfBill).orElse(null);
+		 
+		 if(Objects.nonNull(billWithId))
+			 return billWithId;
+		 else
+			 throw new RecordNotFound(BILL_NOT_FOUND_WITH_ID + idOfBill);
 	}
 
 	@Override
-	public void updateBill(UUID idOfBill, BillDTO billDTO) {
+	public void updateBill(UUID idOfBill, BillDTO billDTO) throws RecordNotFound {
 		Bill billById = getBillById(idOfBill);
 
 		if (Objects.nonNull(billById)) {
@@ -240,8 +279,11 @@ public class HospitalServiceImpl implements HospitalService {
 	}
 
 	@Override
-	public void deleteBill(UUID idOfBill) {
-		billRepository.deleteById(idOfBill);
+	public void deleteBill(UUID idOfBill) throws RecordNotFound {
+		Bill billById = getBillById(idOfBill);
+		
+		if(Objects.nonNull(billById))
+			billRepository.deleteById(idOfBill);
 
 	}
 
@@ -283,7 +325,7 @@ public class HospitalServiceImpl implements HospitalService {
 	}
 
 	@Override
-	public List<Patient> getAllPatientsForADoctor(UUID idOfDoctor) {
+	public List<Patient> getAllPatientsForADoctor(UUID idOfDoctor) throws RecordNotFound {
 		List<Patient> listOfPatients = new ArrayList<>();
 		Doctor doctorById = getDoctorById(idOfDoctor);
 		doctorById.getPatients()
@@ -294,9 +336,15 @@ public class HospitalServiceImpl implements HospitalService {
 	}
 
 	@Override
-	public List<TreatmentHistory> getAllTreatmentHistoryForADoctor(UUID idOfDoctor) {
-		List<TreatmentHistory> allTreatmentHistoriesByDoctorId = treatmentHistoryRepository.findAllTreatmentHistoriesByDoctorId(idOfDoctor);
-		return allTreatmentHistoriesByDoctorId;
+	public List<TreatmentHistory> getAllTreatmentHistoryForADoctor(UUID idOfDoctor) throws RecordNotFound {
+		Doctor doctorById = getDoctorById(idOfDoctor);
+		
+		if(Objects.nonNull(doctorById)) {
+			List<TreatmentHistory> allTreatmentHistoriesByDoctorId = treatmentHistoryRepository.findAllTreatmentHistoriesByDoctorId(idOfDoctor);
+			return allTreatmentHistoriesByDoctorId;
+		}
+		
+		return null;
 	}
 
 	@Override
@@ -306,15 +354,31 @@ public class HospitalServiceImpl implements HospitalService {
 	}
 
 	@Override
-	public List<TreatmentHistory> getAllTreatmentHistoriesByPatientId(UUID idOfPatient) {
-		List<TreatmentHistory> allTreatmentHistoriesByPatientId = treatmentHistoryRepository.findAllTreatmentHistoriesByPatientId(idOfPatient);
-		return allTreatmentHistoriesByPatientId;
+	public List<TreatmentHistory> getAllTreatmentHistoriesByPatientId(UUID idOfPatient) throws RecordNotFound {
+		Patient patientById = getPatientById(idOfPatient);
+		
+		if(Objects.nonNull(patientById)) {
+			List<TreatmentHistory> allTreatmentHistoriesByPatientId = treatmentHistoryRepository.findAllTreatmentHistoriesByPatientId(idOfPatient);
+			return allTreatmentHistoriesByPatientId;
+		}
+		
+		return null;
 	}
 
 	@Override
-	public Bill getBillByPatientId(UUID idOfPatient) {
-		Bill billByPatientId = billRepository.getBillByPatientId(idOfPatient);
-		return billByPatientId;
+	public Bill getBillByPatientId(UUID idOfPatient) throws RecordNotFound {
+		Patient patientById = getPatientById(idOfPatient);
+		
+		if(Objects.nonNull(patientById)) {
+			Bill billByPatientId = billRepository.getBillByPatientId(idOfPatient);
+			
+			if(Objects.nonNull(billByPatientId)) 
+				return billByPatientId;
+			else 
+				throw new RecordNotFound(BILL_NOT_FOUND_WITH_PATIENT_ID + idOfPatient);
+		}
+		
+		return null;
 	}
 
 	@Override
@@ -324,7 +388,7 @@ public class HospitalServiceImpl implements HospitalService {
 	}
 
 	@Override
-	public List<Doctor> getAllDoctorsForAPatient(UUID idOfPatient) {
+	public List<Doctor> getAllDoctorsForAPatient(UUID idOfPatient) throws RecordNotFound {
 		List<Doctor> doctorslistForAPatient = new ArrayList<>();
 		Patient patientById = getPatientById(idOfPatient);
 		patientById.getDoctors()

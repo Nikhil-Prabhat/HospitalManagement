@@ -62,5 +62,22 @@ public interface Constants {
 	String BILL_SAVED_SUCCESSFULLY = "Bill Saved Successfully";
 	String BILL_UPDATED_SUCCESSFULLY = "Bill Updated Successfully";
 	String BILL_DELETED_SUCCESSFULLY = "Bill Deleted Successfully";
+	String NOT_EMPTY = "Must Not Be Empty!";
+	String NOT_NULL = "Must Not Be Null!";
+	String NOT_STARTED = "NOT_STARTED";
+	String UNDER_TREATMENT = "UNDER_TREATMENT";
+	String RECOVERED = "RECOVERED";
+	String MOBILE_VALIDATION_MSG = "The mobile no should be of size 10!";
+	String ERROR_MESSAGE = "errorMessage";
+	String ERROR_CLASS = "errorClass";
+	String DOCTOR_NOT_FOUND_WITH_ID = "Doctor Not Found with ID : ";
+	String PATIENT_NOT_FOUND_WITH_ID="Patient Not Found With ID : ";
+	String APPOINTMENT_NOT_FOUND_WITH_ID="Appointment Not Found With ID : ";
+	String BILL_NOT_FOUND_WITH_ID="Bill Not Found With ID : ";
+	String TREATMENT_HISTORY_NOT_FOUND_WITH_ID = "Treatment History Not Found With ID : ";
+	String BILL_NOT_FOUND_WITH_PATIENT_ID = "Bill Not Found With Patient ID : ";
+	String METHOD_INVOKED = "Method Invoked :- ";
+	String ARGUMENTS = "Arguments :- ";
+	String RESPONSE = "Response :- ";
 
 }
