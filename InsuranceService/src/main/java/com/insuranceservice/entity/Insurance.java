@@ -37,5 +37,4 @@ public abstract class Insurance {
 	@Column(name = "INSURANCE_TYPE" , insertable = false, updatable = false)
 	@Setter(value = AccessLevel.NONE)
 	private String insuranceType;
-
 }
