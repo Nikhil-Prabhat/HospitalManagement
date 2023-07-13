@@ -6,6 +6,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -22,8 +24,10 @@ public class PatientClaim {
 	@GeneratedValue(strategy = GenerationType.UUID)
 	private UUID id;
 	private UUID patientId;
-	private String insurerName;
-	private String insurerAmountLimit;
-	private String insuranceType;
+	
+	@ManyToOne
+	@JoinColumn(name = "PC_IN_FK")
+	private Insurance insuranceTaken;
 	private Double amountSpent;
+	private Double remainingAmount;
 }

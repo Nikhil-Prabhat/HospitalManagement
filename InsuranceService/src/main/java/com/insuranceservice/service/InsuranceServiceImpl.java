@@ -76,10 +76,9 @@ public class InsuranceServiceImpl implements InsuranceService, Constants {
 	public void savePatientClaim(PatientClaimDTO patientClaimDTO) {
 		PatientClaim patientClaim = new PatientClaim();
 		patientClaim.setPatientId(patientClaimDTO.getPatientId());
-		patientClaim.setInsurerName(patientClaimDTO.getInsurerName());
-		patientClaim.setInsurerAmountLimit(patientClaimDTO.getInsurerAmountLimit());
-		patientClaim.setInsuranceType(patientClaimDTO.getInsuranceType());
+		patientClaim.setInsuranceTaken(patientClaimDTO.getInsuranceTaken());
 		patientClaim.setAmountSpent(patientClaimDTO.getAmountSpent());
+		patientClaim.setRemainingAmount(patientClaimDTO.getRemainingAmount());
 
 		patientClaimRepository.save(patientClaim);
 
@@ -101,10 +100,8 @@ public class InsuranceServiceImpl implements InsuranceService, Constants {
 		PatientClaim patientClaimById = getPatientClaimById(idOfPatientClaim);
 
 		if (Objects.nonNull(patientClaimById)) {
-			patientClaimById.setInsurerName(patientClaimDTO.getInsurerName());
-			patientClaimById.setInsurerAmountLimit(patientClaimDTO.getInsurerAmountLimit());
-			patientClaimById.setInsuranceType(patientClaimDTO.getInsuranceType());
 			patientClaimById.setAmountSpent(patientClaimDTO.getAmountSpent());
+			patientClaimById.setRemainingAmount(patientClaimDTO.getRemainingAmount());
 			
 			patientClaimRepository.save(patientClaimById);
 		}
@@ -137,8 +134,12 @@ public class InsuranceServiceImpl implements InsuranceService, Constants {
 	}
 
 	@Override
-	public Double calculateAmountToBePaidByPatient(Double totalExpense, Double insuranceAmount) {
-		return totalExpense - insuranceAmount;
+	public Double calculateAmountToBePaidByPatient(UUID idOfPatient, UUID idOfInsurance) {
+		BillDTO billByPatientId = getBillByPatientId(idOfPatient);
+		Insurance insuranceById = getInsuranceById(idOfInsurance);
+		Double billAmount = Objects.nonNull(billByPatientId.getTotalAmountOfBill()) ? billByPatientId.getTotalAmountOfBill() : 0.0d;
+		
+		return insuranceById.getInsurerAmountLimit() - billAmount;
 	}
 
 	

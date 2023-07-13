@@ -25,7 +25,7 @@ import lombok.Setter;
 @Table(name = "INSURER_TABLE", schema = "INSURANCE")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "INSURANCE_TYPE", discriminatorType = DiscriminatorType.STRING)
-public abstract class Insurance {
+public class Insurance {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.UUID)

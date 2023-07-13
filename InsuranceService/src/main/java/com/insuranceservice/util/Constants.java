@@ -6,8 +6,8 @@ public interface Constants {
 	String INTERNATIONAL = "INTERNATIONAL";
 	String ID = "id";
 	String AUTHORIZATION = "Authorization";
-	String TOTAL_EXPENSE = "totalexpense";
-	String INSURANCE_AMOUNT = "insuranceamount";
+	String PATIENT_ID = "patientid";
+	String INSURANCE_ID = "insuranceid";
 	String VALIDATE = "/validate";
 	String INSURANCEAPP = "/insuranceapp";
 	String SAVE_INSURER_DETAILS = "/saveinsurerdetails";
@@ -22,11 +22,15 @@ public interface Constants {
 	String GET_PATIENT_BY_ID = "/getpatientbyid/{" + ID + "}";
 	String GET_ALL_TREATMENT_HISTORY_FOR_A_PATIENT = "/getalltreatmenthistoryforapatient/{" + ID + "}";
 	String GET_BILL_BY_PATIENT_ID = "/getbillbypatientid/{"+ID+"}";
-	String FINAL_COST_CALCULATION = "/calculatefinalamount/{" + TOTAL_EXPENSE+ "}/{" + INSURANCE_AMOUNT +"}";
+	String FINAL_COST_CALCULATION = "/calculatefinalamount/{" + PATIENT_ID+ "}/{" + INSURANCE_ID +"}";
 	String INSURER_SAVED_SUCCESSFULLY = "Insurer Details Saved Successfully";
 	String INSURER_DELETED_SUCCESSFULLY = "Insurer Deleted Successfully";
 	String PATIENT_CLAIM_SAVED_SUCCESSFULLY = "Patient Claim Saved Successfully";
 	String PATIENT_CLAIM_UPDATED_SUCCESSFULLY = "Patient Claim Updated Successfully";
 	String PATIENT_CLAIM_DELETED_SUCCESSFULLY = "Patient Claim Deleted Successfully";
+	String NOT_EMPTY = "Must Not Be Empty!";
+	String NOT_NULL = "Must Not Be Null!";
+	String INSURANCE_TYPE_CHECK = INDIAN + "|" + INTERNATIONAL;
+	String INSURANCE_TYPE_NOT_PROVIDED_CORRECTLY = "Insurance Type Not Provided Correctly, It should be either INDIAN or INTERNATIONAL";
 
 }

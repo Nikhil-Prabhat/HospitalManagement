@@ -37,7 +37,7 @@ public interface InsuranceService {
 	
 	public BillDTO getBillByPatientId(UUID idOfPatient);
 	
-	public Double calculateAmountToBePaidByPatient(Double totalExpense, Double insuranceAmount);
+	public Double calculateAmountToBePaidByPatient(UUID idOfPatient, UUID idOfInsurance);
 	
 
 }

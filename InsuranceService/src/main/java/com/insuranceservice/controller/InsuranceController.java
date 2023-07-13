@@ -113,8 +113,8 @@ public class InsuranceController implements Constants {
 	}
 	
 	@GetMapping(FINAL_COST_CALCULATION)
-	public ResponseEntity<?> calculateRemainingAmountToBePaid(@PathVariable(TOTAL_EXPENSE) Double totalExpense, @PathVariable(INSURANCE_AMOUNT) Double insuranceAmount) {
-		Double finalAmountToBePaid = insuranceServiceImpl.calculateAmountToBePaidByPatient(totalExpense, insuranceAmount);
+	public ResponseEntity<?> calculateRemainingAmountToBePaid(@PathVariable(PATIENT_ID) UUID idOfPatient,@PathVariable(INSURANCE_ID) UUID idOfInsurance) {
+		Double finalAmountToBePaid = insuranceServiceImpl.calculateAmountToBePaidByPatient(idOfPatient, idOfInsurance);
 		return new ResponseEntity<>(finalAmountToBePaid, HttpStatus.OK);
 	}
 
