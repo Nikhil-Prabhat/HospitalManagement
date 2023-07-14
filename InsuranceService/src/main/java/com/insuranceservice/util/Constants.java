@@ -32,5 +32,13 @@ public interface Constants {
 	String NOT_NULL = "Must Not Be Null!";
 	String INSURANCE_TYPE_CHECK = INDIAN + "|" + INTERNATIONAL;
 	String INSURANCE_TYPE_NOT_PROVIDED_CORRECTLY = "Insurance Type Not Provided Correctly, It should be either INDIAN or INTERNATIONAL";
+	String METHOD_INVOKED = "Method Invoked :- ";
+	String ARGUMENTS = "Arguments :- ";
+	String RESPONSE = "Response :- ";
+	String ERROR_MESSAGE = "errorMessage";
+	String ERROR_CLASS = "errorClass";
+	String INSURER_NOT_FOUND_WITH_ID = "Insurer Not Found With Id : ";
+	String PATIENT_CLAIM_NOT_FOUND_WITH_ID = "Patient Claim Not Found With Id : ";
+	
 
 }

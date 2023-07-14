@@ -22,8 +22,12 @@ import com.insuranceservice.dto.PatientDTO;
 import com.insuranceservice.dto.TreatmentHistoryDTO;
 import com.insuranceservice.entity.Insurance;
 import com.insuranceservice.entity.PatientClaim;
+import com.insuranceservice.exception.InsurerNotFoundException;
+import com.insuranceservice.exception.PatientClaimNotFoundException;
 import com.insuranceservice.service.InsuranceService;
 import com.insuranceservice.util.Constants;
+
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping(Constants.INSURANCEAPP)
@@ -35,7 +39,7 @@ public class InsuranceController implements Constants {
 	/* CRUD Endpoints Pertaining to Insurance */
 
 	@PostMapping(SAVE_INSURER_DETAILS)
-	public ResponseEntity<?> saveInsurerDetails(@RequestBody InsuranceDTO insuranceDTO) {
+	public ResponseEntity<?> saveInsurerDetails(@RequestBody @Valid InsuranceDTO insuranceDTO) {
 		insuranceServiceImpl.saveInsurance(insuranceDTO);
 		return new ResponseEntity<>(INSURER_SAVED_SUCCESSFULLY, HttpStatus.CREATED);
 	}
@@ -47,13 +51,13 @@ public class InsuranceController implements Constants {
 	}
 
 	@GetMapping(GET_INSURER_BY_ID)
-	public ResponseEntity<?> getInsurerDetailsById(@PathVariable(ID) UUID idOfInsurer) {
+	public ResponseEntity<?> getInsurerDetailsById(@PathVariable(ID) UUID idOfInsurer) throws InsurerNotFoundException {
 		Insurance insuranceById = insuranceServiceImpl.getInsuranceById(idOfInsurer);
 		return new ResponseEntity<>(insuranceById, HttpStatus.OK);
 	}
 
 	@DeleteMapping(DELETE_INSURER_BY_ID)
-	public ResponseEntity<?> deleteInsurerById(@PathVariable(ID) UUID idOfInsurer) {
+	public ResponseEntity<?> deleteInsurerById(@PathVariable(ID) UUID idOfInsurer) throws InsurerNotFoundException {
 		insuranceServiceImpl.deleteInsuraceById(idOfInsurer);
 		return new ResponseEntity<>(INSURER_DELETED_SUCCESSFULLY, HttpStatus.ACCEPTED);
 	}
@@ -61,7 +65,7 @@ public class InsuranceController implements Constants {
 	/* CRUD Endpoints pertaining to Patient Claim */
 
 	@PostMapping(SAVE_PATIENT_CLAIM)
-	public ResponseEntity<?> savePatientClaim(@RequestBody PatientClaimDTO patientClaimDTO) {
+	public ResponseEntity<?> savePatientClaim(@RequestBody @Valid PatientClaimDTO patientClaimDTO) {
 		insuranceServiceImpl.savePatientClaim(patientClaimDTO);
 		return new ResponseEntity<>(PATIENT_CLAIM_SAVED_SUCCESSFULLY, HttpStatus.CREATED);
 	}
@@ -73,20 +77,20 @@ public class InsuranceController implements Constants {
 	}
 
 	@GetMapping(GET_PATIENT_CLAIM_BY_ID)
-	public ResponseEntity<?> getPatientClaimById(@PathVariable(ID) UUID idOfPatientClaim) {
+	public ResponseEntity<?> getPatientClaimById(@PathVariable(ID) UUID idOfPatientClaim) throws PatientClaimNotFoundException {
 		PatientClaim patientClaimById = insuranceServiceImpl.getPatientClaimById(idOfPatientClaim);
 		return new ResponseEntity<>(patientClaimById, HttpStatus.OK);
 	}
 
 	@PutMapping(UPDATE_PATIENT_CLAIM)
 	public ResponseEntity<?> updatePatientClaim(@PathVariable(ID) UUID idOfPatientClaim,
-			@RequestBody PatientClaimDTO patientClaimDTO) {
+			@RequestBody @Valid PatientClaimDTO patientClaimDTO) throws PatientClaimNotFoundException {
 		insuranceServiceImpl.updatePatientClaim(idOfPatientClaim, patientClaimDTO);
 		return new ResponseEntity<>(PATIENT_CLAIM_UPDATED_SUCCESSFULLY, HttpStatus.ACCEPTED);
 	}
 
 	@DeleteMapping(DELETE_PATIENT_CLAIM_BY_ID)
-	public ResponseEntity<?> deletePatientClaim(@PathVariable(ID) UUID idOfPatientClaim) {
+	public ResponseEntity<?> deletePatientClaim(@PathVariable(ID) UUID idOfPatientClaim) throws InsurerNotFoundException {
 		insuranceServiceImpl.deleteInsuraceById(idOfPatientClaim);
 		return new ResponseEntity<>(PATIENT_CLAIM_DELETED_SUCCESSFULLY, HttpStatus.ACCEPTED);
 	}
@@ -113,7 +117,7 @@ public class InsuranceController implements Constants {
 	}
 	
 	@GetMapping(FINAL_COST_CALCULATION)
-	public ResponseEntity<?> calculateRemainingAmountToBePaid(@PathVariable(PATIENT_ID) UUID idOfPatient,@PathVariable(INSURANCE_ID) UUID idOfInsurance) {
+	public ResponseEntity<?> calculateRemainingAmountToBePaid(@PathVariable(PATIENT_ID) UUID idOfPatient,@PathVariable(INSURANCE_ID) UUID idOfInsurance) throws InsurerNotFoundException {
 		Double finalAmountToBePaid = insuranceServiceImpl.calculateAmountToBePaidByPatient(idOfPatient, idOfInsurance);
 		return new ResponseEntity<>(finalAmountToBePaid, HttpStatus.OK);
 	}

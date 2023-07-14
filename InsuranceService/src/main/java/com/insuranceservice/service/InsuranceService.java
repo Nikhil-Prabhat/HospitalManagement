@@ -10,6 +10,8 @@ import com.insuranceservice.dto.PatientDTO;
 import com.insuranceservice.dto.TreatmentHistoryDTO;
 import com.insuranceservice.entity.Insurance;
 import com.insuranceservice.entity.PatientClaim;
+import com.insuranceservice.exception.InsurerNotFoundException;
+import com.insuranceservice.exception.PatientClaimNotFoundException;
 
 public interface InsuranceService {
 
@@ -17,19 +19,19 @@ public interface InsuranceService {
 
 	public List<Insurance> getAllInsuranceDetails();
 
-	public Insurance getInsuranceById(UUID idOfInsurance);
+	public Insurance getInsuranceById(UUID idOfInsurance) throws InsurerNotFoundException;
 
-	public void deleteInsuraceById(UUID idOfInsurance);
+	public void deleteInsuraceById(UUID idOfInsurance) throws InsurerNotFoundException;
 
 	public void savePatientClaim(PatientClaimDTO patientClaimDTO);
 
 	public List<PatientClaim> getAllPatientClaims();
 
-	public PatientClaim getPatientClaimById(UUID idOfPatientClaim);
+	public PatientClaim getPatientClaimById(UUID idOfPatientClaim) throws PatientClaimNotFoundException;
 
-	public void updatePatientClaim(UUID idOfPatientClaim, PatientClaimDTO patientDTO);
+	public void updatePatientClaim(UUID idOfPatientClaim, PatientClaimDTO patientDTO) throws PatientClaimNotFoundException;
 
-	public void deletePatientClaimById(UUID idOfPatientClaim);
+	public void deletePatientClaimById(UUID idOfPatientClaim) throws PatientClaimNotFoundException;
 	
 	public PatientDTO getPatientById(UUID idOfPatient);
 	
@@ -37,7 +39,7 @@ public interface InsuranceService {
 	
 	public BillDTO getBillByPatientId(UUID idOfPatient);
 	
-	public Double calculateAmountToBePaidByPatient(UUID idOfPatient, UUID idOfInsurance);
+	public Double calculateAmountToBePaidByPatient(UUID idOfPatient, UUID idOfInsurance) throws InsurerNotFoundException;
 	
 
 }

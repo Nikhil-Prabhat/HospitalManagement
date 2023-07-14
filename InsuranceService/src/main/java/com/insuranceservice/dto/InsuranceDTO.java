@@ -18,14 +18,8 @@ public class InsuranceDTO implements Constants{
 	@NotEmpty(message = NOT_EMPTY)
 	private String insurerName;
 	
-	@NotNull(message = NOT_NULL)
-	@NotEmpty(message = NOT_EMPTY)
 	private Double insurerAmountLimit;
-	
-	@NotNull(message = NOT_NULL)
-	@NotEmpty(message = NOT_EMPTY)
 	private Integer disbursementTime;
-	
 	private String insurerOriginState;
 	private String insurerOriginCountry;
 	

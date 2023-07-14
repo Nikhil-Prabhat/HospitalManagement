@@ -17,6 +17,8 @@ import com.insuranceservice.entity.IndianInsurance;
 import com.insuranceservice.entity.Insurance;
 import com.insuranceservice.entity.InternationInsurance;
 import com.insuranceservice.entity.PatientClaim;
+import com.insuranceservice.exception.InsurerNotFoundException;
+import com.insuranceservice.exception.PatientClaimNotFoundException;
 import com.insuranceservice.repository.InsuranceRepository;
 import com.insuranceservice.repository.PatientClaimRepository;
 import com.insuranceservice.util.Constants;
@@ -54,14 +56,21 @@ public class InsuranceServiceImpl implements InsuranceService, Constants {
 	}
 
 	@Override
-	public Insurance getInsuranceById(UUID idOfInsurance) {
+	public Insurance getInsuranceById(UUID idOfInsurance) throws InsurerNotFoundException {
 		Insurance insuranceById = insuranceRepository.findById(idOfInsurance).orElse(null);
-		return insuranceById;
+
+		if (Objects.nonNull(insuranceById))
+			return insuranceById;
+		else
+			throw new InsurerNotFoundException(INSURER_NOT_FOUND_WITH_ID + idOfInsurance);
 	}
 
 	@Override
-	public void deleteInsuraceById(UUID idOfInsurance) {
-		insuranceRepository.deleteById(idOfInsurance);
+	public void deleteInsuraceById(UUID idOfInsurance) throws InsurerNotFoundException {
+		Insurance insuranceById = getInsuranceById(idOfInsurance);
+
+		if (Objects.nonNull(insuranceById))
+			insuranceRepository.deleteById(idOfInsurance);
 	}
 
 	private void setCommonPropertiesAndSaveEntity(Insurance insurance, InsuranceDTO insuranceDTO) {
@@ -90,27 +99,35 @@ public class InsuranceServiceImpl implements InsuranceService, Constants {
 	}
 
 	@Override
-	public PatientClaim getPatientClaimById(UUID idOfPatientClaim) {
+	public PatientClaim getPatientClaimById(UUID idOfPatientClaim) throws PatientClaimNotFoundException {
 		PatientClaim patientClaimById = patientClaimRepository.findById(idOfPatientClaim).orElse(null);
-		return patientClaimById;
+
+		if (Objects.nonNull(patientClaimById))
+			return patientClaimById;
+		else
+			throw new PatientClaimNotFoundException(PATIENT_CLAIM_NOT_FOUND_WITH_ID + idOfPatientClaim);
 	}
 
 	@Override
-	public void updatePatientClaim(UUID idOfPatientClaim, PatientClaimDTO patientClaimDTO) {
+	public void updatePatientClaim(UUID idOfPatientClaim, PatientClaimDTO patientClaimDTO)
+			throws PatientClaimNotFoundException {
 		PatientClaim patientClaimById = getPatientClaimById(idOfPatientClaim);
 
 		if (Objects.nonNull(patientClaimById)) {
 			patientClaimById.setAmountSpent(patientClaimDTO.getAmountSpent());
 			patientClaimById.setRemainingAmount(patientClaimDTO.getRemainingAmount());
-			
+
 			patientClaimRepository.save(patientClaimById);
 		}
 
 	}
 
 	@Override
-	public void deletePatientClaimById(UUID idOfPatientClaim) {
-		patientClaimRepository.deleteById(idOfPatientClaim);
+	public void deletePatientClaimById(UUID idOfPatientClaim) throws PatientClaimNotFoundException {
+		PatientClaim patientClaimById = getPatientClaimById(idOfPatientClaim);
+
+		if (Objects.nonNull(patientClaimById))
+			patientClaimRepository.deleteById(idOfPatientClaim);
 
 	}
 
@@ -134,15 +151,15 @@ public class InsuranceServiceImpl implements InsuranceService, Constants {
 	}
 
 	@Override
-	public Double calculateAmountToBePaidByPatient(UUID idOfPatient, UUID idOfInsurance) {
+	public Double calculateAmountToBePaidByPatient(UUID idOfPatient, UUID idOfInsurance)
+			throws InsurerNotFoundException {
 		BillDTO billByPatientId = getBillByPatientId(idOfPatient);
 		Insurance insuranceById = getInsuranceById(idOfInsurance);
-		Double billAmount = Objects.nonNull(billByPatientId.getTotalAmountOfBill()) ? billByPatientId.getTotalAmountOfBill() : 0.0d;
-		
+		Double billAmount = Objects.nonNull(billByPatientId.getTotalAmountOfBill())
+				? billByPatientId.getTotalAmountOfBill()
+				: 0.0d;
+
 		return insuranceById.getInsurerAmountLimit() - billAmount;
 	}
-
-	
-	
 
 }
