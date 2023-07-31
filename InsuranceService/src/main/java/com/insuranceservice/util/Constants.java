@@ -39,6 +39,10 @@ public interface Constants {
 	String ERROR_CLASS = "errorClass";
 	String INSURER_NOT_FOUND_WITH_ID = "Insurer Not Found With Id : ";
 	String PATIENT_CLAIM_NOT_FOUND_WITH_ID = "Patient Claim Not Found With Id : ";
+	String FALLBACK_METHOD_MESSAGE = "Fallback Method For Insurance Service Invoked";
+	String CIRCUIT_BREAKER_NAME = "insuranceCircuitBreaker";
+	String RETRY_NAME = "insuranceRetry";
+	String FALLBACK_METHOD_NAME = "insuranceFallbackMethod";
 	
 
 }

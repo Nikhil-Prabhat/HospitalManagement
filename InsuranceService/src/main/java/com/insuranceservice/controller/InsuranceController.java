@@ -27,6 +27,8 @@ import com.insuranceservice.exception.PatientClaimNotFoundException;
 import com.insuranceservice.service.InsuranceService;
 import com.insuranceservice.util.Constants;
 
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+import io.github.resilience4j.retry.annotation.Retry;
 import jakarta.validation.Valid;
 
 @RestController
@@ -77,7 +79,8 @@ public class InsuranceController implements Constants {
 	}
 
 	@GetMapping(GET_PATIENT_CLAIM_BY_ID)
-	public ResponseEntity<?> getPatientClaimById(@PathVariable(ID) UUID idOfPatientClaim) throws PatientClaimNotFoundException {
+	public ResponseEntity<?> getPatientClaimById(@PathVariable(ID) UUID idOfPatientClaim)
+			throws PatientClaimNotFoundException {
 		PatientClaim patientClaimById = insuranceServiceImpl.getPatientClaimById(idOfPatientClaim);
 		return new ResponseEntity<>(patientClaimById, HttpStatus.OK);
 	}
@@ -90,13 +93,16 @@ public class InsuranceController implements Constants {
 	}
 
 	@DeleteMapping(DELETE_PATIENT_CLAIM_BY_ID)
-	public ResponseEntity<?> deletePatientClaim(@PathVariable(ID) UUID idOfPatientClaim) throws InsurerNotFoundException {
+	public ResponseEntity<?> deletePatientClaim(@PathVariable(ID) UUID idOfPatientClaim)
+			throws InsurerNotFoundException {
 		insuranceServiceImpl.deleteInsuraceById(idOfPatientClaim);
 		return new ResponseEntity<>(PATIENT_CLAIM_DELETED_SUCCESSFULLY, HttpStatus.ACCEPTED);
 	}
 
 	/* Client Related Endpoints */
-	
+
+	@CircuitBreaker(name = CIRCUIT_BREAKER_NAME, fallbackMethod = FALLBACK_METHOD_NAME)
+	@Retry(name = RETRY_NAME)
 	@GetMapping(GET_ALL_TREATMENT_HISTORY_FOR_A_PATIENT)
 	public ResponseEntity<?> getAllTreatmentHistoriesByPatientId(@PathVariable(name = ID) UUID idOfPatient) {
 		List<TreatmentHistoryDTO> allTreatmentHistoriesByPatientId = insuranceServiceImpl
@@ -104,22 +110,34 @@ public class InsuranceController implements Constants {
 		return new ResponseEntity<>(allTreatmentHistoriesByPatientId, HttpStatus.OK);
 	}
 
+	@CircuitBreaker(name = CIRCUIT_BREAKER_NAME, fallbackMethod = FALLBACK_METHOD_NAME)
+	@Retry(name = RETRY_NAME)
 	@GetMapping(GET_PATIENT_BY_ID)
 	public ResponseEntity<?> getPatientDetailsByPatientId(@PathVariable(name = ID) UUID idOfPatient) {
 		PatientDTO patientById = insuranceServiceImpl.getPatientById(idOfPatient);
 		return new ResponseEntity<>(patientById, HttpStatus.OK);
 	}
 
+	@CircuitBreaker(name = CIRCUIT_BREAKER_NAME, fallbackMethod = FALLBACK_METHOD_NAME)
+	@Retry(name = RETRY_NAME)
 	@GetMapping(GET_BILL_BY_PATIENT_ID)
 	public ResponseEntity<?> getBillDetailsByPatientId(@PathVariable(name = ID) UUID idOfPatient) {
 		BillDTO billByPatientId = insuranceServiceImpl.getBillByPatientId(idOfPatient);
 		return new ResponseEntity<>(billByPatientId, HttpStatus.OK);
 	}
-	
+
+	@CircuitBreaker(name = CIRCUIT_BREAKER_NAME, fallbackMethod = FALLBACK_METHOD_NAME)
+	@Retry(name = RETRY_NAME)
 	@GetMapping(FINAL_COST_CALCULATION)
-	public ResponseEntity<?> calculateRemainingAmountToBePaid(@PathVariable(PATIENT_ID) UUID idOfPatient,@PathVariable(INSURANCE_ID) UUID idOfInsurance) throws InsurerNotFoundException {
+	public ResponseEntity<?> calculateRemainingAmountToBePaid(@PathVariable(PATIENT_ID) UUID idOfPatient,
+			@PathVariable(INSURANCE_ID) UUID idOfInsurance) throws InsurerNotFoundException {
 		Double finalAmountToBePaid = insuranceServiceImpl.calculateAmountToBePaidByPatient(idOfPatient, idOfInsurance);
 		return new ResponseEntity<>(finalAmountToBePaid, HttpStatus.OK);
+	}
+
+	/* Fallback method for circuit breaker and retry */
+	public ResponseEntity<?> insuranceFallbackMethod(Exception ex) {
+		return new ResponseEntity<>(FALLBACK_METHOD_MESSAGE, HttpStatus.EXPECTATION_FAILED);
 	}
 
 }
