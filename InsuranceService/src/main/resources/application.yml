@@ -26,4 +26,27 @@ auth:
 hospital:
  url: http://localhost:9091/hospitalapp
  name: hospitalapp 
+ 
+#Circuit Breaker And Retry
+resilience4j:
+ retry:
+  retry-aspect-order: 2
+  instances:
+   insuranceRetry:
+    max-attempts: 3
+    wait-duration: 5s
+     
+ circuitbreaker:
+  circuit-breaker-aspect-order: 1
+  instances:
+   insuranceCircuitBreaker:
+    wait-duration-in-open-state: 1m
+    permitted-number-of-calls-in-half-open-state: 3
+    sliding-window-type: count-based
+    sliding-window-size: 5
+    minimum-number-of-calls: 5
+    failure-rate-threshold: 60
+      
+    
+ 
 
