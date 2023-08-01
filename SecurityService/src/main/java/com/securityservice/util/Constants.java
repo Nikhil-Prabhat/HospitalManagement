@@ -20,11 +20,12 @@ public interface Constants {
 	String ROLE_CHECK = ROLE_ADMIN + "|" + ROLE_USER + "|" + ROLE_DOCTOR;
 	String NOT_EMPTY = "Must Not Be Empty!";
 	String NOT_NULL = "Must Not Be Null!";
-	String CORRECT_ROLE_NOT_SUPPLIED = "Correct Role Not Provided, It should be either ROLE_ADMIN or ROLE_USER";
+	String CORRECT_ROLE_NOT_SUPPLIED = "Correct Role Not Provided, It should be either ROLE_ADMIN or ROLE_USER or ROLE_DOCTOR";
 	String ERROR_MESSAGE = "errorMessage";
 	String ERROR_CLASS = "errorClass";
 	String METHOD_INVOKED = "Method Invoked :- ";
 	String ARGUMENTS = "Arguments :- ";
 	String RESPONSE = "Response :- ";
+	String INCORRECT_CREDENTIALS = "Incorrect Credentials For the User : ";
 
 }

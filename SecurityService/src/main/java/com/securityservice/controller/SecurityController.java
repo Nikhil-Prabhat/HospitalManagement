@@ -47,10 +47,9 @@ public class SecurityController implements Constants {
 		if (hospitalUser.getPassword().equals(authRequest.getPassword()))
 			return new ResponseEntity<>(new UserToken(authRequest.getUsername(), jwtUtil.generateToken(hospitalUser)),
 					HttpStatus.CREATED);
-		else
-			throw new UserNotFoundException(USER_NOT_FOUND_WITH_NAME + authRequest.getUsername());
-
-	}
+		else 
+			throw new UserNotFoundException(INCORRECT_CREDENTIALS + authRequest.getUsername());
+		}
 
 	@GetMapping(VALIDATE)
 	public ResponseEntity<?> validate(@RequestHeader(AUTHORIZATION) String token) {
