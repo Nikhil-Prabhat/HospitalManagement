@@ -12,13 +12,16 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.hospitalservice.client.AuthClient;
 import com.hospitalservice.dto.AppointmentDTO;
 import com.hospitalservice.dto.BillDTO;
 import com.hospitalservice.dto.DoctorDTO;
 import com.hospitalservice.dto.PatientDTO;
+import com.hospitalservice.dto.TokenValidationResponse;
 import com.hospitalservice.dto.TreatmentHistoryDTO;
 import com.hospitalservice.entity.Appointment;
 import com.hospitalservice.entity.Bill;
@@ -28,6 +31,7 @@ import com.hospitalservice.entity.TreatmentHistory;
 import com.hospitalservice.exception.RecordNotFound;
 import com.hospitalservice.service.HospitalService;
 import com.hospitalservice.util.Constants;
+import com.hospitalservice.util.Roles;
 
 import jakarta.validation.Valid;
 
@@ -38,12 +42,26 @@ public class HospitalController implements Constants {
 	@Autowired
 	private HospitalService hospitalServiceImpl;
 
+	@Autowired
+	private AuthClient authClient;
+
 	/* CRUD Endpoints Pertaining to Doctor */
 
 	@PostMapping(SAVE_DOCTOR)
-	public ResponseEntity<?> saveDoctors(@RequestBody @Valid DoctorDTO doctorDTO) {
-		hospitalServiceImpl.saveDoctor(doctorDTO);
-		return new ResponseEntity<>(DOCTOR_SAVED_SUCCESSFULLY, HttpStatus.CREATED);
+	public ResponseEntity<?> saveDoctors(@RequestHeader(name = "Authorization") String token,
+			@RequestBody @Valid DoctorDTO doctorDTO) {
+
+		TokenValidationResponse tokenValidationResponse = authClient.verifyToken(token);
+
+		if (tokenValidationResponse.getIsValid()
+				&& (tokenValidationResponse.getRole().equals(Roles.ROLE_ADMIN.getUserRole())
+						|| tokenValidationResponse.getRole().equals(Roles.ROLE_DOCTOR.getUserRole()))) {
+			hospitalServiceImpl.saveDoctor(doctorDTO);
+			return new ResponseEntity<>(DOCTOR_SAVED_SUCCESSFULLY, HttpStatus.CREATED);
+		} else {
+			return new ResponseEntity<>(FORBIDDEN_ROLE_MSG, HttpStatus.FORBIDDEN);
+		}
+
 	}
 
 	@GetMapping(GET_ALL_DOCTOR)
@@ -65,7 +83,8 @@ public class HospitalController implements Constants {
 	}
 
 	@GetMapping(GET_ALL_TREATMENT_HISTORY_FOR_A_DOCTOR)
-	public ResponseEntity<?> getAllTreatmentHistoriesForADoctor(@PathVariable(name = ID) UUID idOfDoctor) throws RecordNotFound {
+	public ResponseEntity<?> getAllTreatmentHistoriesForADoctor(@PathVariable(name = ID) UUID idOfDoctor)
+			throws RecordNotFound {
 		List<TreatmentHistory> allTreatmentHistoryForADoctor = hospitalServiceImpl
 				.getAllTreatmentHistoryForADoctor(idOfDoctor);
 		return new ResponseEntity<>(allTreatmentHistoryForADoctor, HttpStatus.OK);
@@ -78,9 +97,10 @@ public class HospitalController implements Constants {
 				.getAllAppointmentsForADoctor(doctorAssignedName);
 		return new ResponseEntity<>(allAppointmentsForADoctor, HttpStatus.OK);
 	}
-	
+
 	@PutMapping(UPDATE_DOCTOR)
-	public ResponseEntity<?> updateDoctor(@PathVariable(name = ID) UUID idOfDoctor, @RequestBody @Valid DoctorDTO doctorDTO) throws RecordNotFound {
+	public ResponseEntity<?> updateDoctor(@PathVariable(name = ID) UUID idOfDoctor,
+			@RequestBody @Valid DoctorDTO doctorDTO) throws RecordNotFound {
 		hospitalServiceImpl.updateDoctor(idOfDoctor, doctorDTO);
 		return new ResponseEntity<>(DOCTOR_UPDATED_SUCCESSFULLY, HttpStatus.ACCEPTED);
 	}
@@ -106,7 +126,8 @@ public class HospitalController implements Constants {
 	}
 
 	@GetMapping(GET_ALL_TREATMENT_HISTORY_FOR_A_PATIENT)
-	public ResponseEntity<?> getAllTreatmentHistoriesForAPatient(@PathVariable(name = ID) UUID idOfPatient) throws RecordNotFound {
+	public ResponseEntity<?> getAllTreatmentHistoriesForAPatient(@PathVariable(name = ID) UUID idOfPatient)
+			throws RecordNotFound {
 		List<TreatmentHistory> allTreatmentHistoriesByPatientId = hospitalServiceImpl
 				.getAllTreatmentHistoriesByPatientId(idOfPatient);
 		return new ResponseEntity<>(allTreatmentHistoriesByPatientId, HttpStatus.OK);
@@ -117,13 +138,13 @@ public class HospitalController implements Constants {
 		Bill billByPatientId = hospitalServiceImpl.getBillByPatientId(idOfPatient);
 		return new ResponseEntity<>(billByPatientId, HttpStatus.OK);
 	}
-	
+
 	@GetMapping(GET_ALL_APPOINTMENTS_FOR_A_PATIENT)
 	public ResponseEntity<?> getAllAppointmentsByPatientName(@PathVariable(name = PATIENT_NAME) String patientName) {
 		List<Appointment> allAppointmentsForAPatient = hospitalServiceImpl.getAllAppointmentsForAPatient(patientName);
 		return new ResponseEntity<>(allAppointmentsForAPatient, HttpStatus.OK);
 	}
-	
+
 	@GetMapping(GET_ALL_DOCTORS_FOR_A_PATIENT)
 	public ResponseEntity<?> getAllDoctorsForAPatient(@PathVariable(name = ID) UUID idOfPatient) throws RecordNotFound {
 		List<Doctor> allDoctorsForAPatient = hospitalServiceImpl.getAllDoctorsForAPatient(idOfPatient);
@@ -137,7 +158,8 @@ public class HospitalController implements Constants {
 	}
 
 	@PutMapping(UPDATE_PATIENT)
-	public ResponseEntity<?> updatePatient(@PathVariable(name = ID) UUID idOfPatient, @RequestBody @Valid PatientDTO patientDTO) throws RecordNotFound {
+	public ResponseEntity<?> updatePatient(@PathVariable(name = ID) UUID idOfPatient,
+			@RequestBody @Valid PatientDTO patientDTO) throws RecordNotFound {
 		hospitalServiceImpl.updatePatient(idOfPatient, patientDTO);
 		return new ResponseEntity<>(PATIENT_UPDATED_SUCCESSFULLY, HttpStatus.ACCEPTED);
 	}
@@ -205,7 +227,8 @@ public class HospitalController implements Constants {
 	}
 
 	@GetMapping(GET_TREATMENT_HISTORY_BY_ID)
-	public ResponseEntity<?> getTreatmentHistoryById(@PathVariable(name = ID) UUID idOfTreatmentHistory) throws RecordNotFound {
+	public ResponseEntity<?> getTreatmentHistoryById(@PathVariable(name = ID) UUID idOfTreatmentHistory)
+			throws RecordNotFound {
 		TreatmentHistory treatmentHistoryById = hospitalServiceImpl.getTreatmentHistoryById(idOfTreatmentHistory);
 		return new ResponseEntity<>(treatmentHistoryById, HttpStatus.OK);
 	}
@@ -244,7 +267,8 @@ public class HospitalController implements Constants {
 	}
 
 	@PutMapping(UPDATE_BILL)
-	public ResponseEntity<?> updateBill(@PathVariable(name = ID) UUID idOfBill, @RequestBody BillDTO billDTO) throws RecordNotFound {
+	public ResponseEntity<?> updateBill(@PathVariable(name = ID) UUID idOfBill, @RequestBody BillDTO billDTO)
+			throws RecordNotFound {
 		hospitalServiceImpl.updateBill(idOfBill, billDTO);
 		return new ResponseEntity<>(BILL_UPDATED_SUCCESSFULLY, HttpStatus.ACCEPTED);
 	}

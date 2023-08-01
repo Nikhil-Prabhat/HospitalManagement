@@ -79,5 +79,6 @@ public interface Constants {
 	String METHOD_INVOKED = "Method Invoked :- ";
 	String ARGUMENTS = "Arguments :- ";
 	String RESPONSE = "Response :- ";
+	String FORBIDDEN_ROLE_MSG = "Sorry, You Are Not Having Appropriate Role For This Operation !!";
 
 }
