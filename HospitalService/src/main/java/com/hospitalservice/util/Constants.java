@@ -80,5 +80,9 @@ public interface Constants {
 	String ARGUMENTS = "Arguments :- ";
 	String RESPONSE = "Response :- ";
 	String FORBIDDEN_ROLE_MSG = "Sorry, You Are Not Having Appropriate Role For This Operation !!";
+	String FALLBACK_METHOD_MESSAGE = "Fallback Method For Hospital Service Invoked";
+	String CIRCUIT_BREAKER_NAME = "hospitalCircuitBreaker";
+	String RETRY_NAME = "hospitalRetry";
+	String FALLBACK_METHOD_NAME = "hospitalFallbackMethod";
 
 }
