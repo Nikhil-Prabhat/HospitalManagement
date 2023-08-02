@@ -22,3 +22,23 @@ server:
 auth:
  url: http://localhost:9090/authapp
  name: authapp
+ 
+#Circuit Breaker And Retry
+resilience4j:
+ retry:
+  retry-aspect-order: 2
+  instances:
+   hospitalRetry:
+    max-attempts: 3
+    wait-duration: 5s
+     
+ circuitbreaker:
+  circuit-breaker-aspect-order: 1
+  instances:
+   hospitalCircuitBreaker:
+    wait-duration-in-open-state: 1m
+    permitted-number-of-calls-in-half-open-state: 3
+    sliding-window-type: count-based
+    sliding-window-size: 5
+    minimum-number-of-calls: 5
+    failure-rate-threshold: 60
