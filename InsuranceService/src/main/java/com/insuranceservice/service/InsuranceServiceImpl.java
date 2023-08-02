@@ -132,28 +132,28 @@ public class InsuranceServiceImpl implements InsuranceService, Constants {
 	}
 
 	@Override
-	public PatientDTO getPatientById(UUID idOfPatient) {
-		PatientDTO patientById = hospitalServiceClient.getPatientById(idOfPatient);
+	public PatientDTO getPatientById(String token, UUID idOfPatient) {
+		PatientDTO patientById = hospitalServiceClient.getPatientById(token, idOfPatient);
 		return patientById;
 	}
 
 	@Override
-	public List<TreatmentHistoryDTO> getAllTreatmentHistoriesByPatientId(UUID idOfPatient) {
+	public List<TreatmentHistoryDTO> getAllTreatmentHistoriesByPatientId(String token, UUID idOfPatient) {
 		List<TreatmentHistoryDTO> allTreatmentHistoriesByPatientId = hospitalServiceClient
-				.getAllTreatmentHistoriesByPatientId(idOfPatient);
+				.getAllTreatmentHistoriesByPatientId(token, idOfPatient);
 		return allTreatmentHistoriesByPatientId;
 	}
 
 	@Override
-	public BillDTO getBillByPatientId(UUID idOfPatient) {
-		BillDTO billByPatientId = hospitalServiceClient.getBillByPatientId(idOfPatient);
+	public BillDTO getBillByPatientId(String token, UUID idOfPatient) {
+		BillDTO billByPatientId = hospitalServiceClient.getBillByPatientId(token, idOfPatient);
 		return billByPatientId;
 	}
 
 	@Override
-	public Double calculateAmountToBePaidByPatient(UUID idOfPatient, UUID idOfInsurance)
+	public Double calculateAmountToBePaidByPatient(String token, UUID idOfPatient, UUID idOfInsurance)
 			throws InsurerNotFoundException {
-		BillDTO billByPatientId = getBillByPatientId(idOfPatient);
+		BillDTO billByPatientId = getBillByPatientId(token, idOfPatient);
 		Insurance insuranceById = getInsuranceById(idOfInsurance);
 		Double billAmount = Objects.nonNull(billByPatientId.getTotalAmountOfBill())
 				? billByPatientId.getTotalAmountOfBill()

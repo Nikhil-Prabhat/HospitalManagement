@@ -33,13 +33,13 @@ public interface InsuranceService {
 
 	public void deletePatientClaimById(UUID idOfPatientClaim) throws PatientClaimNotFoundException;
 	
-	public PatientDTO getPatientById(UUID idOfPatient);
+	public PatientDTO getPatientById(String token, UUID idOfPatient);
 	
-	public List<TreatmentHistoryDTO> getAllTreatmentHistoriesByPatientId(UUID idOfPatient);
+	public List<TreatmentHistoryDTO> getAllTreatmentHistoriesByPatientId(String token, UUID idOfPatient);
 	
-	public BillDTO getBillByPatientId(UUID idOfPatient);
+	public BillDTO getBillByPatientId(String token, UUID idOfPatient);
 	
-	public Double calculateAmountToBePaidByPatient(UUID idOfPatient, UUID idOfInsurance) throws InsurerNotFoundException;
+	public Double calculateAmountToBePaidByPatient(String token, UUID idOfPatient, UUID idOfInsurance) throws InsurerNotFoundException;
 	
 
 }

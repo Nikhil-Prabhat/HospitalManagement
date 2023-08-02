@@ -43,6 +43,7 @@ public interface Constants {
 	String CIRCUIT_BREAKER_NAME = "insuranceCircuitBreaker";
 	String RETRY_NAME = "insuranceRetry";
 	String FALLBACK_METHOD_NAME = "insuranceFallbackMethod";
+	String FORBIDDEN_ROLE_MSG = "Sorry, You Are Not Having Appropriate Role For This Operation !!";
 	
 
 }
