@@ -54,7 +54,7 @@ public class InsuranceController implements Constants {
 		TokenValidationResponse tokenValidationResponse = authClient.verifyToken(token);
 
 		if (tokenValidationResponse.getIsValid()
-				&& tokenValidationResponse.getRole().equals(Roles.ROLE_ADMIN.getUserRole())) {
+				&& (tokenValidationResponse.getRole().equals(Roles.ROLE_ADMIN.getUserRole()))) {
 			insuranceServiceImpl.saveInsurance(insuranceDTO);
 			return new ResponseEntity<>(INSURER_SAVED_SUCCESSFULLY, HttpStatus.CREATED);
 		} else
@@ -68,7 +68,8 @@ public class InsuranceController implements Constants {
 		TokenValidationResponse tokenValidationResponse = authClient.verifyToken(token);
 
 		if (tokenValidationResponse.getIsValid()
-				&& tokenValidationResponse.getRole().equals(Roles.ROLE_ADMIN.getUserRole())) {
+				&& (tokenValidationResponse.getRole().equals(Roles.ROLE_ADMIN.getUserRole())
+						|| tokenValidationResponse.getRole().equals(Roles.ROLE_USER.getUserRole()))) {
 			List<Insurance> allInsuranceDetails = insuranceServiceImpl.getAllInsuranceDetails();
 			return new ResponseEntity<>(allInsuranceDetails, HttpStatus.OK);
 		} else
@@ -83,7 +84,8 @@ public class InsuranceController implements Constants {
 		TokenValidationResponse tokenValidationResponse = authClient.verifyToken(token);
 
 		if (tokenValidationResponse.getIsValid()
-				&& tokenValidationResponse.getRole().equals(Roles.ROLE_ADMIN.getUserRole())) {
+				&& (tokenValidationResponse.getRole().equals(Roles.ROLE_ADMIN.getUserRole())
+						|| tokenValidationResponse.getRole().equals(Roles.ROLE_USER.getUserRole()))) {
 			Insurance insuranceById = insuranceServiceImpl.getInsuranceById(idOfInsurer);
 			return new ResponseEntity<>(insuranceById, HttpStatus.OK);
 		} else
@@ -115,7 +117,8 @@ public class InsuranceController implements Constants {
 		TokenValidationResponse tokenValidationResponse = authClient.verifyToken(token);
 
 		if (tokenValidationResponse.getIsValid()
-				&& tokenValidationResponse.getRole().equals(Roles.ROLE_ADMIN.getUserRole())) {
+				&& (tokenValidationResponse.getRole().equals(Roles.ROLE_ADMIN.getUserRole())
+						|| tokenValidationResponse.getRole().equals(Roles.ROLE_USER.getUserRole()))) {
 			insuranceServiceImpl.savePatientClaim(patientClaimDTO);
 			return new ResponseEntity<>(PATIENT_CLAIM_SAVED_SUCCESSFULLY, HttpStatus.CREATED);
 		} else
@@ -144,7 +147,8 @@ public class InsuranceController implements Constants {
 		TokenValidationResponse tokenValidationResponse = authClient.verifyToken(token);
 
 		if (tokenValidationResponse.getIsValid()
-				&& tokenValidationResponse.getRole().equals(Roles.ROLE_ADMIN.getUserRole())) {
+				&& (tokenValidationResponse.getRole().equals(Roles.ROLE_ADMIN.getUserRole())
+						|| tokenValidationResponse.getRole().equals(Roles.ROLE_USER.getUserRole()))) {
 			PatientClaim patientClaimById = insuranceServiceImpl.getPatientClaimById(idOfPatientClaim);
 			return new ResponseEntity<>(patientClaimById, HttpStatus.OK);
 		} else
@@ -160,7 +164,8 @@ public class InsuranceController implements Constants {
 		TokenValidationResponse tokenValidationResponse = authClient.verifyToken(token);
 
 		if (tokenValidationResponse.getIsValid()
-				&& tokenValidationResponse.getRole().equals(Roles.ROLE_ADMIN.getUserRole())) {
+				&& (tokenValidationResponse.getRole().equals(Roles.ROLE_ADMIN.getUserRole())
+						|| tokenValidationResponse.getRole().equals(Roles.ROLE_USER.getUserRole()))) {
 			insuranceServiceImpl.updatePatientClaim(idOfPatientClaim, patientClaimDTO);
 			return new ResponseEntity<>(PATIENT_CLAIM_UPDATED_SUCCESSFULLY, HttpStatus.ACCEPTED);
 		} else
@@ -192,7 +197,8 @@ public class InsuranceController implements Constants {
 		TokenValidationResponse tokenValidationResponse = authClient.verifyToken(token);
 
 		if (tokenValidationResponse.getIsValid()
-				&& tokenValidationResponse.getRole().equals(Roles.ROLE_ADMIN.getUserRole())) {
+				&& (tokenValidationResponse.getRole().equals(Roles.ROLE_ADMIN.getUserRole())
+						|| tokenValidationResponse.getRole().equals(Roles.ROLE_USER.getUserRole()))) {
 			List<TreatmentHistoryDTO> allTreatmentHistoriesByPatientId = insuranceServiceImpl
 					.getAllTreatmentHistoriesByPatientId(token, idOfPatient);
 			return new ResponseEntity<>(allTreatmentHistoriesByPatientId, HttpStatus.OK);
@@ -208,7 +214,8 @@ public class InsuranceController implements Constants {
 		TokenValidationResponse tokenValidationResponse = authClient.verifyToken(token);
 
 		if (tokenValidationResponse.getIsValid()
-				&& tokenValidationResponse.getRole().equals(Roles.ROLE_ADMIN.getUserRole())) {
+				&& (tokenValidationResponse.getRole().equals(Roles.ROLE_ADMIN.getUserRole())
+						|| tokenValidationResponse.getRole().equals(Roles.ROLE_USER.getUserRole()))) {
 			PatientDTO patientById = insuranceServiceImpl.getPatientById(token, idOfPatient);
 			return new ResponseEntity<>(patientById, HttpStatus.OK);
 		} else
@@ -223,7 +230,8 @@ public class InsuranceController implements Constants {
 		TokenValidationResponse tokenValidationResponse = authClient.verifyToken(token);
 
 		if (tokenValidationResponse.getIsValid()
-				&& tokenValidationResponse.getRole().equals(Roles.ROLE_ADMIN.getUserRole())) {
+				&& (tokenValidationResponse.getRole().equals(Roles.ROLE_ADMIN.getUserRole())
+						|| tokenValidationResponse.getRole().equals(Roles.ROLE_USER.getUserRole()))) {
 			BillDTO billByPatientId = insuranceServiceImpl.getBillByPatientId(token, idOfPatient);
 			return new ResponseEntity<>(billByPatientId, HttpStatus.OK);
 		} else
@@ -239,7 +247,8 @@ public class InsuranceController implements Constants {
 		TokenValidationResponse tokenValidationResponse = authClient.verifyToken(token);
 
 		if (tokenValidationResponse.getIsValid()
-				&& tokenValidationResponse.getRole().equals(Roles.ROLE_ADMIN.getUserRole())) {
+				&& (tokenValidationResponse.getRole().equals(Roles.ROLE_ADMIN.getUserRole())
+						|| tokenValidationResponse.getRole().equals(Roles.ROLE_USER.getUserRole()))) {
 			Double finalAmountToBePaid = insuranceServiceImpl.calculateAmountToBePaidByPatient(token, idOfPatient,
 					idOfInsurance);
 			return new ResponseEntity<>(finalAmountToBePaid, HttpStatus.OK);
