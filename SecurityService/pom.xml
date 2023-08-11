@@ -98,6 +98,7 @@
 				</configuration>
 			</plugin>
 		</plugins>
+		<finalName>security-service</finalName>
 	</build>
 
 </project>
