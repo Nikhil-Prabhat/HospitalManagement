@@ -42,9 +42,9 @@ public interface Constants {
 	String GET_ALL_TREATMENT_HISTORY_FOR_A_DOCTOR = "/getalltreatmenthistoryforadoctor/{" + ID + "}";
 	String GET_ALL_TREATMENT_HISTORY_FOR_A_PATIENT = "/getalltreatmenthistoryforapatient/{" + ID + "}";
 	String GET_ALL_APPOINTMENTS_FOR_A_DOCTOR = "/getallappointmentsforadoctor/{" + DOCTOR_ASSIGNED_NAME + "}";
-	String GET_ALL_APPOINTMENTS_FOR_A_PATIENT = "/getallappointmentsforapatient/{"+PATIENT_NAME+"}";
-	String GET_ALL_DOCTORS_FOR_A_PATIENT = "/getalldoctorsforapatient/{"+ID+"}";
-	String GET_BILL_BY_PATIENT_ID = "/getbillbypatientid/{"+ID+"}";
+	String GET_ALL_APPOINTMENTS_FOR_A_PATIENT = "/getallappointmentsforapatient/{" + PATIENT_NAME + "}";
+	String GET_ALL_DOCTORS_FOR_A_PATIENT = "/getalldoctorsforapatient/{" + ID + "}";
+	String GET_BILL_BY_PATIENT_ID = "/getbillbypatientid/{" + ID + "}";
 	String GET_TOTAL_BILL_OF_HOSPITAL = "/gettotalbillofhospital";
 	String PATIENT_SAVED_SUCCESSFULLY = "Patient Saved Successfully";
 	String DOCTOR_SAVED_SUCCESSFULLY = "Doctor saved successfully";
@@ -71,9 +71,9 @@ public interface Constants {
 	String ERROR_MESSAGE = "errorMessage";
 	String ERROR_CLASS = "errorClass";
 	String DOCTOR_NOT_FOUND_WITH_ID = "Doctor Not Found with ID : ";
-	String PATIENT_NOT_FOUND_WITH_ID="Patient Not Found With ID : ";
-	String APPOINTMENT_NOT_FOUND_WITH_ID="Appointment Not Found With ID : ";
-	String BILL_NOT_FOUND_WITH_ID="Bill Not Found With ID : ";
+	String PATIENT_NOT_FOUND_WITH_ID = "Patient Not Found With ID : ";
+	String APPOINTMENT_NOT_FOUND_WITH_ID = "Appointment Not Found With ID : ";
+	String BILL_NOT_FOUND_WITH_ID = "Bill Not Found With ID : ";
 	String TREATMENT_HISTORY_NOT_FOUND_WITH_ID = "Treatment History Not Found With ID : ";
 	String BILL_NOT_FOUND_WITH_PATIENT_ID = "Bill Not Found With Patient ID : ";
 	String METHOD_INVOKED = "Method Invoked :- ";
@@ -84,5 +84,11 @@ public interface Constants {
 	String CIRCUIT_BREAKER_NAME = "hospitalCircuitBreaker";
 	String RETRY_NAME = "hospitalRetry";
 	String FALLBACK_METHOD_NAME = "hospitalFallbackMethod";
+	String PATIENT_ADDED_EMAIL = "Dear Admin," + "\n\n"
+			+ "One new patient has been added to the hospital successfully !!" + "\n\n" + "Thanks," + "\n" + "HM Team";
+	String PATIENT_ADDED_MAIL_HEADER = "Hospital Management Update - Patient Added : ";
+	String PATIENT_RECOVERD_EMAIL = "Dear Admin," + "\n\n"
+			+ "One patient has been recovered successfully, Plz look into discharge formalities !!" + "\n\n" + "Thanks," + "\n" + "HM Team";
+	String PATIENT_RECOVERED_MAIL_HEADER = "Hospital Management Update - Patient Recovered : ";
 
 }

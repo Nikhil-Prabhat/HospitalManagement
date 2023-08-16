@@ -21,6 +21,7 @@ import com.hospitalservice.entity.Bill;
 import com.hospitalservice.entity.Doctor;
 import com.hospitalservice.entity.Patient;
 import com.hospitalservice.entity.TreatmentHistory;
+import com.hospitalservice.entity.TreatmentStatus;
 import com.hospitalservice.exception.RecordNotFound;
 import com.hospitalservice.repository.AppointmentRepository;
 import com.hospitalservice.repository.BillRepository;
@@ -47,6 +48,10 @@ public class HospitalServiceImpl implements HospitalService, Constants {
 
 	@Autowired
 	private BillRepository billRepository;
+	
+	@Autowired
+	private HospitalSNSService hospitalSNSServiceImpl;
+	
 
 	@Override
 	public void saveDoctor(DoctorDTO doctorDTO) {
@@ -72,6 +77,9 @@ public class HospitalServiceImpl implements HospitalService, Constants {
 		patient.setDoctors(new HashSet<>());
 		patient.setTreatmentStatus(patientDTO.getTreatmentStatus());
 		patientRepository.save(patient);
+		
+		// Send mail to admin to assign doctors to patients
+		hospitalSNSServiceImpl.publishMessageToTopic(PATIENT_ADDED_EMAIL, PATIENT_ADDED_MAIL_HEADER + patient.getName());
 
 	}
 
@@ -133,6 +141,10 @@ public class HospitalServiceImpl implements HospitalService, Constants {
 			patientById.setTreatmentStatus(patientDTO.getTreatmentStatus());
 			patientRepository.save(patientById);
 		}
+		
+		// Update Admin of the recovery of the patient
+		if(patientById.getTreatmentStatus().getTreatmentStatus().equals(TreatmentStatus.RECOVERED.getTreatmentStatus()))
+			hospitalSNSServiceImpl.publishMessageToTopic(PATIENT_RECOVERD_EMAIL, PATIENT_RECOVERED_MAIL_HEADER + patientById.getName());
 
 	}
 

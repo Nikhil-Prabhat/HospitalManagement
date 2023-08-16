@@ -42,3 +42,12 @@ resilience4j:
     sliding-window-size: 5
     minimum-number-of-calls: 5
     failure-rate-threshold: 60
+    
+# AWS Configuration
+
+aws:
+ access-key: AKIAUV66CJ23OJ73ZNUB
+ secret-key: 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
+ topic-arn: arn:aws:sns:ap-south-1:322051395254:HM_Notification 
+ 
+  
