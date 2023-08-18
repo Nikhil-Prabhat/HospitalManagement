@@ -6,6 +6,8 @@ import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.insuranceservice.client.HospitalServiceClient;
@@ -51,8 +53,9 @@ public class InsuranceServiceImpl implements InsuranceService, Constants {
 	}
 
 	@Override
-	public List<Insurance> getAllInsuranceDetails() {
-		List<Insurance> allInsuranceDetails = insuranceRepository.findAll();
+	public List<Insurance> getAllInsuranceDetails(Pageable pageable) {
+		Page<Insurance> allInsuranceDetailsPage = insuranceRepository.findAll(pageable);
+		List<Insurance> allInsuranceDetails = allInsuranceDetailsPage.getContent();
 		return allInsuranceDetails;
 	}
 
@@ -165,7 +168,5 @@ public class InsuranceServiceImpl implements InsuranceService, Constants {
 
 		return insuranceById.getInsurerAmountLimit() - billAmount;
 	}
-	
-	
 
 }

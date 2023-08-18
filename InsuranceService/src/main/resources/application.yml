@@ -12,7 +12,13 @@ spring:
   database-platform: org.hibernate.dialect.PostgreSQLDialect
   hibernate:
    ddl-auto: update
-  show-sql: true  
+  show-sql: true
+ 
+ data:
+  web:
+   pageable:
+    page-parameter: "pageOffset"
+    size-parameter: "itemLimit"  
     
     
 server:
