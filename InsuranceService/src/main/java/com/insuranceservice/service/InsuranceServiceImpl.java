@@ -5,6 +5,7 @@ import java.util.Objects;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import com.insuranceservice.client.HospitalServiceClient;
@@ -132,12 +133,14 @@ public class InsuranceServiceImpl implements InsuranceService, Constants {
 	}
 
 	@Override
+	@Cacheable(cacheNames = CACHE_NAME, key = KEY_PATIENT_DETAILS_BY_PATIENT_ID)
 	public PatientDTO getPatientById(String token, UUID idOfPatient) {
 		PatientDTO patientById = hospitalServiceClient.getPatientById(token, idOfPatient);
 		return patientById;
 	}
 
 	@Override
+	@Cacheable(cacheNames = CACHE_NAME, key = KEY_TREATMENT_HISTORIES_BY_PATIENT_ID)
 	public List<TreatmentHistoryDTO> getAllTreatmentHistoriesByPatientId(String token, UUID idOfPatient) {
 		List<TreatmentHistoryDTO> allTreatmentHistoriesByPatientId = hospitalServiceClient
 				.getAllTreatmentHistoriesByPatientId(token, idOfPatient);
@@ -145,6 +148,7 @@ public class InsuranceServiceImpl implements InsuranceService, Constants {
 	}
 
 	@Override
+	@Cacheable(cacheNames = CACHE_NAME, key = KEY_BILL_DETAILS_BY_PATIENT_ID)
 	public BillDTO getBillByPatientId(String token, UUID idOfPatient) {
 		BillDTO billByPatientId = hospitalServiceClient.getBillByPatientId(token, idOfPatient);
 		return billByPatientId;
@@ -161,5 +165,7 @@ public class InsuranceServiceImpl implements InsuranceService, Constants {
 
 		return insuranceById.getInsurerAmountLimit() - billAmount;
 	}
+	
+	
 
 }

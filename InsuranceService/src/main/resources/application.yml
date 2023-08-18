@@ -46,7 +46,12 @@ resilience4j:
     sliding-window-size: 5
     minimum-number-of-calls: 5
     failure-rate-threshold: 60
-      
+    
+    
+#Cache cleanup time
+caching:
+ spring:
+  hmTTL: 60000     
     
  
 
