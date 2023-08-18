@@ -44,6 +44,10 @@ public interface Constants {
 	String RETRY_NAME = "insuranceRetry";
 	String FALLBACK_METHOD_NAME = "insuranceFallbackMethod";
 	String FORBIDDEN_ROLE_MSG = "Sorry, You Are Not Having Appropriate Role For This Operation !!";
+	String CACHE_NAME = "hospitalManagementCache";
+	String KEY_PATIENT_DETAILS_BY_PATIENT_ID = "'patientDetailsByPatientId'";
+	String KEY_TREATMENT_HISTORIES_BY_PATIENT_ID = "'treatmentHistoriesByPatientId'";
+	String KEY_BILL_DETAILS_BY_PATIENT_ID = "'billDetailsByPatientId'";
 	
 
 }
