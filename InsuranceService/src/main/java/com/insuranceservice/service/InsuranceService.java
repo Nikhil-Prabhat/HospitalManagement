@@ -3,6 +3,8 @@ package com.insuranceservice.service;
 import java.util.List;
 import java.util.UUID;
 
+import org.springframework.data.domain.Pageable;
+
 import com.insuranceservice.dto.BillDTO;
 import com.insuranceservice.dto.InsuranceDTO;
 import com.insuranceservice.dto.PatientClaimDTO;
@@ -17,7 +19,7 @@ public interface InsuranceService {
 
 	public void saveInsurance(InsuranceDTO insuranceDTO);
 
-	public List<Insurance> getAllInsuranceDetails();
+	public List<Insurance> getAllInsuranceDetails(Pageable pageable);
 
 	public Insurance getInsuranceById(UUID idOfInsurance) throws InsurerNotFoundException;
 

@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -65,13 +67,13 @@ public class InsuranceController implements Constants {
 	@CircuitBreaker(name = CIRCUIT_BREAKER_NAME, fallbackMethod = FALLBACK_METHOD_NAME)
 	@Retry(name = RETRY_NAME)
 	@GetMapping(GET_ALL_INSURER_DETAILS)
-	public ResponseEntity<?> getAllInsurerDetails(@RequestHeader(name = AUTHORIZATION) String token) {
+	public ResponseEntity<?> getAllInsurerDetails(@RequestHeader(name = AUTHORIZATION) String token, @PageableDefault(value = 10) Pageable pageable) {
 		TokenValidationResponse tokenValidationResponse = authClient.verifyToken(token);
 
 		if (tokenValidationResponse.getIsValid()
 				&& (tokenValidationResponse.getRole().equals(Roles.ROLE_ADMIN.getUserRole())
 						|| tokenValidationResponse.getRole().equals(Roles.ROLE_USER.getUserRole()))) {
-			List<Insurance> allInsuranceDetails = insuranceServiceImpl.getAllInsuranceDetails();
+			List<Insurance> allInsuranceDetails = insuranceServiceImpl.getAllInsuranceDetails(pageable);
 			return new ResponseEntity<>(allInsuranceDetails, HttpStatus.OK);
 		} else
 			return new ResponseEntity<>(FORBIDDEN_ROLE_MSG, HttpStatus.FORBIDDEN);
