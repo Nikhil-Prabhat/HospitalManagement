@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -27,6 +28,7 @@ import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping(Constants.AUTHAPP)
+@CrossOrigin(origins = "*")
 public class SecurityController implements Constants {
 
 	@Autowired
@@ -34,7 +36,7 @@ public class SecurityController implements Constants {
 
 	@Autowired
 	private HospitalUserServiceImpl hospitalUserServiceImpl;
-
+	
 	@PostMapping(SAVE_USER)
 	public ResponseEntity<?> saveUser(@RequestBody @Valid HospitalUserDTO hospitalUserDTO) {
 		hospitalUserServiceImpl.saveUser(hospitalUserDTO);
