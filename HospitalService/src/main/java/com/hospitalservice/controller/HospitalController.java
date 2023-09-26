@@ -230,8 +230,8 @@ public class HospitalController implements Constants {
 			return new ResponseEntity<>(FORBIDDEN_ROLE_MSG, HttpStatus.FORBIDDEN);
 	}
 
-	@CircuitBreaker(name = CIRCUIT_BREAKER_NAME, fallbackMethod = FALLBACK_METHOD_NAME)
-	@Retry(name = RETRY_NAME)
+	//@CircuitBreaker(name = CIRCUIT_BREAKER_NAME, fallbackMethod = FALLBACK_METHOD_NAME)
+	//@Retry(name = RETRY_NAME)
 	@GetMapping(GET_BILL_BY_PATIENT_ID)
 	public ResponseEntity<?> getBillByPatientId(@RequestHeader(name = AUTHORIZATION) String token,
 			@PathVariable(name = ID) UUID idOfPatient) throws RecordNotFound {
