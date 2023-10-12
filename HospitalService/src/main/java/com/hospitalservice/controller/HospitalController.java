@@ -76,7 +76,8 @@ public class HospitalController implements Constants {
 		TokenValidationResponse tokenValidationResponse = authClient.verifyToken(token);
 
 		if (tokenValidationResponse.getIsValid()
-				&& tokenValidationResponse.getRole().equals(Roles.ROLE_ADMIN.getUserRole())) {
+				&& (tokenValidationResponse.getRole().equals(Roles.ROLE_ADMIN.getUserRole())
+						|| tokenValidationResponse.getRole().equals(Roles.ROLE_DOCTOR.getUserRole()))) {
 			List<Doctor> allDoctors = hospitalServiceImpl.getAllDoctors();
 			return new ResponseEntity<>(allDoctors, HttpStatus.OK);
 		} else
@@ -206,7 +207,8 @@ public class HospitalController implements Constants {
 		TokenValidationResponse tokenValidationResponse = authClient.verifyToken(token);
 
 		if (tokenValidationResponse.getIsValid()
-				&& (tokenValidationResponse.getRole().equals(Roles.ROLE_ADMIN.getUserRole()))) {
+				&& (tokenValidationResponse.getRole().equals(Roles.ROLE_ADMIN.getUserRole())
+						|| tokenValidationResponse.getRole().equals(Roles.ROLE_USER.getUserRole()))) {
 			List<Patient> allPatients = hospitalServiceImpl.getAllPatients();
 			return new ResponseEntity<>(allPatients, HttpStatus.OK);
 		} else
@@ -230,8 +232,9 @@ public class HospitalController implements Constants {
 			return new ResponseEntity<>(FORBIDDEN_ROLE_MSG, HttpStatus.FORBIDDEN);
 	}
 
-	//@CircuitBreaker(name = CIRCUIT_BREAKER_NAME, fallbackMethod = FALLBACK_METHOD_NAME)
-	//@Retry(name = RETRY_NAME)
+	// @CircuitBreaker(name = CIRCUIT_BREAKER_NAME, fallbackMethod =
+	// FALLBACK_METHOD_NAME)
+	// @Retry(name = RETRY_NAME)
 	@GetMapping(GET_BILL_BY_PATIENT_ID)
 	public ResponseEntity<?> getBillByPatientId(@RequestHeader(name = AUTHORIZATION) String token,
 			@PathVariable(name = ID) UUID idOfPatient) throws RecordNotFound {
@@ -600,7 +603,7 @@ public class HospitalController implements Constants {
 		} else
 			return new ResponseEntity<>(FORBIDDEN_ROLE_MSG, HttpStatus.FORBIDDEN);
 	}
-	
+
 	/* Fallback method for circuit breaker and retry */
 	public ResponseEntity<?> hospitalFallbackMethod(Exception ex) {
 		return new ResponseEntity<>(FALLBACK_METHOD_MESSAGE, HttpStatus.EXPECTATION_FAILED);
