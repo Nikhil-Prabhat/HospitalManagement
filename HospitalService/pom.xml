@@ -107,6 +107,7 @@
 				</configuration>
 			</plugin>
 		</plugins>
+		<finalName>hospital-service</finalName>
 	</build>
 
 </project>

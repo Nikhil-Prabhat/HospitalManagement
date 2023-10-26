@@ -9,9 +9,9 @@ spring:
 #  driver-class-name : org.postgresql.Driver
 
   # Configuring cloud database credentials
-  url: jdbc:postgresql://hospital-management.ccv8qy8qsabn.ap-south-1.rds.amazonaws.com:5432/hospitalmanagement_db
-  username: postgres
-  password: qwerty12345
+  url: jdbc:postgresql://terraform-20231026060119068900000001.ccv8qy8qsabn.ap-south-1.rds.amazonaws.com:5432/hmdb
+  username: root
+  password: adminqwerty
   driver-class-name : org.postgresql.Driver
  
  jpa:
@@ -26,7 +26,7 @@ server:
   
 #Client URL
 auth:
- url: http://localhost:9090/authapp
+ url: http://HM-Security-Service-API.ap-south-1.elasticbeanstalk.com:9090/authapp
  name: authapp
  
 #Circuit Breaker And Retry
@@ -54,6 +54,6 @@ resilience4j:
 aws:
  access-key: AKIAUV66CJ23OJ73ZNUB
  secret-key: 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
- topic-arn: arn:aws:sns:ap-south-1:322051395254:HM_Notification 
+ topic-arn: arn:aws:sns:ap-south-1:322051395254:HM_Notification_Topic 
  
   
