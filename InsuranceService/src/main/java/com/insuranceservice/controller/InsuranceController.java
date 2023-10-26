@@ -181,12 +181,12 @@ public class InsuranceController implements Constants {
 	@Retry(name = RETRY_NAME)
 	@DeleteMapping(DELETE_PATIENT_CLAIM_BY_ID)
 	public ResponseEntity<?> deletePatientClaim(@RequestHeader(name = AUTHORIZATION) String token,
-			@PathVariable(ID) UUID idOfPatientClaim) throws InsurerNotFoundException {
+			@PathVariable(ID) UUID idOfPatientClaim) throws PatientClaimNotFoundException {
 		TokenValidationResponse tokenValidationResponse = authClient.verifyToken(token);
 
 		if (tokenValidationResponse.getIsValid()
 				&& tokenValidationResponse.getRole().equals(Roles.ROLE_ADMIN.getUserRole())) {
-			insuranceServiceImpl.deleteInsuraceById(idOfPatientClaim);
+			insuranceServiceImpl.deletePatientClaimById(idOfPatientClaim);
 			return new ResponseEntity<>(PATIENT_CLAIM_DELETED_SUCCESSFULLY, HttpStatus.ACCEPTED);
 		} else
 			return new ResponseEntity<>(FORBIDDEN_ROLE_MSG, HttpStatus.FORBIDDEN);

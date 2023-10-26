@@ -165,8 +165,9 @@ public class InsuranceServiceImpl implements InsuranceService, Constants {
 		Double billAmount = Objects.nonNull(billByPatientId.getTotalAmountOfBill())
 				? billByPatientId.getTotalAmountOfBill()
 				: 0.0d;
+		Double billToPay = billAmount - insuranceById.getInsurerAmountLimit();
 
-		return insuranceById.getInsurerAmountLimit() - billAmount;
+		return billToPay.doubleValue() > 0 ? billToPay : 0;
 	}
 
 }
