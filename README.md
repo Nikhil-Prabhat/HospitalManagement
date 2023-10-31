@@ -57,8 +57,8 @@ There are a lot of scopes of improvements here which I am planning to work on ne
 ## Infrastructure
 
 - First run the terraform scripts in the cloud to create database and sns topic.
-- Manually deploy jars to Elastic Beanstalk to deploy the backend and leave the deafult as it is.
-- Change respective security group to receive all traffi from everywhere.
+- Manually deploy jars to Elastic Beanstalk to deploy the backend and keep the deafult as it is.
+- Change respective security group to receive all traffic from everywhere.
 - Deploy angular code to S3.
 
   #### S3 Policy
@@ -78,3 +78,11 @@ There are a lot of scopes of improvements here which I am planning to work on ne
     ]
 }
 ```
+
+## Flow
+
+- There should be proper users.
+- Given the doctors, the patients should be added as per the problem 
+- Appointments should be created and accepted by doctor.
+- Once appointment accepted, patient will be assigned to the doctor and treatement status will be updated & treatment can be started.
+- 
