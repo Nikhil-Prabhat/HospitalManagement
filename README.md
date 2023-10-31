@@ -1,6 +1,9 @@
 # HospitalManagement 
 Hospital Mangement is a project, made with the purpose of learning, and can enable us to have some of the hands-on on hospital related works. The backend is created with spring boot 3.x and front-end is created with Angular 12.
 
+### FrontEnd Repo Link 
+https://github.com/Nikhil-Prabhat/Hospital-Management-UI.git
+
 ## Brief
 Hospital Management basically follows microservice architecture. It is having 3 mircoservices which are as follows :
 
