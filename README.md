@@ -1,5 +1,5 @@
 # HospitalManagement 
-This project is generated with spring boot 3.1.0.
+Hospital Mangement is a project, made with the purpose of learning, and can enable us to have some of the hands-on on hospital related works. The backend is created with spring boot 3.x and front-end is created with Angular 12.
 
 ## Brief
 Hospital Management basically follows microservice architecture. It is having 3 mircoservices which are as follows :
@@ -44,7 +44,7 @@ ROLE_USER : The user is having USER access and is allowed to perform or see his 
 http://hm-frontend-deploy.s3-website.ap-south-1.amazonaws.com
 
 ## Improvements
-There are a lot of scopes for improvements here which I am planning to work on :
+There are a lot of scopes of improvements here which I am planning to work on next:
 
 - Automate the  manual tasks performed by ADMIN.
 - Persist the patient claim detail as well after the payment is done.
