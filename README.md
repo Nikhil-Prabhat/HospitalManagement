@@ -61,9 +61,9 @@ There are a lot of scopes of improvements here which I am planning to work on ne
 - Change respective security group to receive all traffic from everywhere.
 - Deploy angular code to S3.
 
-  #### S3 Policy
+#### S3 Policy
 
-  ```sh
+```sh
 {
     "Version": "2012-10-17",
     "Id": "Policy1698315346651",
