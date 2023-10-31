@@ -53,3 +53,28 @@ There are a lot of scopes of improvements here which I am planning to work on ne
 - Persist the patient claim detail as well after the payment is done.
 - Work on different types of testing to ensure sanity of the application i.e Unit Testing for functional testing, Integaration Testing for end to end testing, Contract Testing and Stress Testing to perform the performance testing.
 - Make UI more dynamic.
+
+## Infrastructure
+
+- First run the terraform scripts in the cloud to create database and sns topic.
+- Manually deploy jars to Elastic Beanstalk to deploy the backend and leave the deafult as it is.
+- Change respective security group to receive all traffi from everywhere.
+- Deploy angular code to S3.
+
+  #### S3 Policy
+
+  ```sh
+{
+    "Version": "2012-10-17",
+    "Id": "Policy1698315346651",
+    "Statement": [
+        {
+            "Sid": "Stmt1698315345007",
+            "Effect": "Allow",
+            "Principal": "*",
+            "Action": "s3:*",
+            "Resource": "arn:aws:s3:::hm-frontend-deploy/*"
+        }
+    ]
+}
+```
