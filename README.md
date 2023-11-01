@@ -82,7 +82,8 @@ There are a lot of scopes of improvements here which I am planning to work on ne
 ## Flow
 
 - There should be proper users.
-- Given the doctors, the patients should be added as per the problem 
+- Given the doctors, the patients should be added as per the problem , admin will get notifications  on this.
 - Appointments should be created and accepted by doctor.
-- Once appointment accepted, patient will be assigned to the doctor and treatement status will be updated & treatment can be started.
-- 
+- Once appointment accepted, patient will be assigned to the doctor and treatement status will be updated & treatment can be started by doctor.
+- Once the treatment of a patient is marked recovered, then proceed with bill details, admin will get notifications  on this.
+- After the bill is created, choose the insurance and pay the bill.
