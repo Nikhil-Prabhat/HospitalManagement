@@ -35,7 +35,7 @@ ROLE_USER : The user is having USER access and is allowed to perform or see his 
 - **Pagination** : Pagination is implemented at the database level so as to reduce the load as much as possible.
 - **Caching** : Spring Cache is used to improve the performance and minimise the round trip time from insurance servie to hospital service to get the conclusive details of the respective patient. It caches patient personal information, treatment history, appointments and bill details of the patient.
 - **Spring Scheduling** : Spring Scheduling is implemented to clear the cache every minute.
-- **Entity Inheritance** : Inheritance is showcased on the entity level in insurance service to segregate the parent child relationship.
+- **Hibernate Inheritance** : Hibernate is showcased on the entity level in insurance service to segregate the parent child relationship.
 - **Elastic BeanStalk** : All the three microservices are deployed to Elastic BeanStalk which internally uses Elastic Compute Cloud.
 - **AWS RDS** : PostgreSQL is used as AWS RDS for the data persistence.
 - **SNS** : SNS is used to notify admin for the system update when the patient is added or he/she has recovered so as to proceed with the discharge formalities.
